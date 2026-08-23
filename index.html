@@ -160,15 +160,30 @@ google.accounts.id.initialize({
         };
 
         // Decodificador del token JWT de Google
-        function parseJwt(token) {
-            var base64Url = token.split('.');
-            var base64 = base64Url.replaceAll('-', '+').replaceAll('_', '/');
-            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-                return '%' + ('0' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-
-            return JSON.parse(jsonPayload);
+// Busca y reemplaza únicamente tu función parseJwt por este bloque:
+function parseJwt(token) {
+    try {
+        var base64Url = token.split('.');
+        // CORRECCIÓN: Añadimos [1] para leer el texto del payload directamente
+        var base64 = base64Url[1].replace(/-/g, '+').replace(/_/g, '/');
+        
+        // Añade de forma segura el relleno matemático para Base64
+        while (base64.length % 4) {
+            base64 += '=';
         }
+        
+        // Decodificación universal robusta con soporte UTF-8 completo
+        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+            return '%' + ('0' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    } catch (err) {
+        console.error("Fallo interno al descifrar el token JWT:", err);
+        throw err;
+    }
+}
+
 
         function handleCredentialResponse(response) {
             try {
