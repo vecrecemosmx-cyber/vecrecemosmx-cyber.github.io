@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Real con Google</title>
+    
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        #login-screen { display: block; }
+        #content-screen { display: none; }
+
+        .profile-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid #764ba2;
+        }
+
+        .user-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        .user-email {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .logout-btn:hover {
+            background-color: #bd2130;
+        }
+
+        .google-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            min-height: 44px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PANTALLA 1: INICIO DE SESIÓN -->
+    <div id="login-screen" class="card">
+        <h1>Bienvenido</h1>
+        <p>Inicia sesión para acceder al contenido exclusivo.</p>
+        
+        <div id="buttonDiv" class="google-btn-container">
+            <span style="color: #888; font-size: 13px;">Iniciando servicio de Google...</span>
+        </div>
+    </div>
+
+    <!-- PANTALLA 2: CONTENIDO PROTEGIDO -->
+    <div id="content-screen" class="card">
+        <img id="user-picture" class="profile-img" src="" alt="Foto de perfil">
+        <div id="user-name" class="user-name"></div>
+        <div id="user-email" class="user-email"></div>
+        
+        <div style="text-align: left; margin-bottom: 25px; font-size: 14px; color: #444;">
+            <h3 style="margin-bottom: 8px; color: #764ba2;">¡Acceso Concedido!</h3>
+            <p>Este contenido ahora es visible porque te has autenticado correctamente.</p>
+        </div>
+
+        <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+    </div>
+
+    <script>
+        // Función dedicada a renderizar el botón una vez cargada la API
+        function iniciarBotonGoogle() {
+            if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+                // Limpiamos el texto de carga inicial
+                document.getElementById("buttonDiv").innerHTML = "";
+
+                // Inicializar cliente
+                // Asegúrate de que quede exactamente configurado así en tu index.html:
+google.accounts.id.initialize({
+    client_id: "1038098835533-ljnlngi6p1smnlmk3ocla866af4brv6e.apps.googleusercontent.com",
+    callback: handleCredentialResponse, // Requerido para procesar los datos en el navegador
+    context: "signin",
+    ux_mode: "popup", // Mantener estrictamente en popup para páginas estáticas de GitHub
+    auto_select: false
+});
+
+                // Renderizar físicamente el botón real
+                google.accounts.id.renderButton(
+                    document.getElementById("buttonDiv"),
+                    { 
+                        type: "standard",
+                        theme: "outline", 
+                        size: "large", 
+                        text: "signin_with", 
+                        shape: "pill",
+                        logo_alignment: "left"
+                    }
+                );
+            } else {
+                document.getElementById("buttonDiv").innerHTML = 
+                `<p style='color:#dc3545; font-size:12px; font-weight:600;'>
+                    Error: Ejecuta este archivo mediante un servidor local (http://localhost) para saltar la seguridad de Chrome OS.
+                 </p>`;
+            }
+        }
+
+        // Forzamos el chequeo al cargar la ventana
+        window.onload = function() {
+            setTimeout(iniciarBotonGoogle, 600);
+        };
+
+        // Decodificador del token JWT de Google
+        function parseJwt(token) {
+            var base64Url = token.split('.');
+            var base64 = base64Url.replaceAll('-', '+').replaceAll('_', '/');
+            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('0' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
+        }
+
+        function handleCredentialResponse(response) {
+            try {
+                const responsePayload = parseJwt(response.credential);
+
+                document.getElementById('user-name').textContent = responsePayload.name;
+                document.getElementById('user-email').textContent = responsePayload.email;
+                document.getElementById('user-picture').src = responsePayload.picture;
+
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('content-screen').style.display = 'block';
+            } catch (error) {
+                console.error("Error en autenticación:", error);
+                alert("Ocurrió un problema leyendo tu cuenta de Google.");
+            }
+        }
+
+        function logout() {
+            if (window.google && google.accounts && google.accounts.id) {
+                google.accounts.id.disableAutoSelect();
+            }
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>
