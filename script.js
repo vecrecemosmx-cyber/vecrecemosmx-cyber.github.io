@@ -41,7 +41,7 @@ function hablarTexto(texto, idioma) {
     window.speechSynthesis.cancel();
     const lectura = new SpeechSynthesisUtterance(texto);
     lectura.lang = idioma;
-    lectura.rate = 0.85;   
+    lectura.rate = 0.6;   
     window.speechSynthesis.speak(lectura);
 }
 
