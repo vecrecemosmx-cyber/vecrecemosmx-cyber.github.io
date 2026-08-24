@@ -3,7 +3,7 @@ const TOTAL_TABLES = 5;
 const ROWS = 6;
 
 const TABLAS_INFO = [
-    { nombre: "Tabla 1", fonema: "/ə/", palabras: ["about", "banana", "camera", "support", "pencil", "circus"] },
+    { nombre: "Tabla 1", fonema: "/ə/", palabras: ["allow", "banana", "camera", "support", "pencil", "circus"] },
     { nombre: "Tabla 2", fonema: "/ɪ/", palabras: ["sit", "pin", "bit", "fish", "window", "kitchen"] },
     { nombre: "Tabla 3", fonema: "/ɛ/", palabras: ["bed", "desk", "pen", "head", "member", "seven"] },
     { nombre: "Tabla 4", fonema: "/æ/", palabras: ["cat", "map", "bad", "hand", "family", "apple"] },
