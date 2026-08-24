@@ -2,6 +2,7 @@
 const TOTAL_TABLES = 5;
 const ROWS = 6;
 
+// CAMBIO REALIZADO: "about" por "allow"
 const TABLAS_INFO = [
     { nombre: "Tabla 1", fonema: "/ə/", palabras: ["allow", "banana", "camera", "support", "pencil", "circus"] },
     { nombre: "Tabla 2", fonema: "/ɪ/", palabras: ["sit", "pin", "bit", "fish", "window", "kitchen"] },
@@ -36,14 +37,26 @@ const btnSave = document.getElementById("btn-save");
 const btnExport = document.getElementById("btn-export");
 const btnAudioMain = document.getElementById("btn-audio-main");
 
-// --- FUNCIÓN MOTOR DE VOZ ---
+// NUEVO: Captura de elementos del slider de velocidad
+const audioSpeedSlider = document.getElementById("audio-speed");
+const speedValueDisplay = document.getElementById("speed-value");
+
+// --- FUNCIÓN MOTOR DE VOZ ACTUALIZADA ---
 function hablarTexto(texto, idioma) {
     window.speechSynthesis.cancel();
     const lectura = new SpeechSynthesisUtterance(texto);
     lectura.lang = idioma;
-    lectura.rate = 0.6;   
+    
+    // NUEVO: Lee dinámicamente la velocidad que marque el control deslizante
+    lectura.rate = parseFloat(audioSpeedSlider.value);   
+    
     window.speechSynthesis.speak(lectura);
 }
+
+// NUEVO: Escuchador para actualizar el texto del indicador de velocidad (.txt) al deslizar
+audioSpeedSlider.addEventListener("input", (e) => {
+    speedValueDisplay.textContent = `${e.target.value}x`;
+});
 
 // Oidores de eventos base
 btnAudioMain.addEventListener("click", () => {
