@@ -185,21 +185,61 @@ function parseJwt(token) {
 }
 
 
-        function handleCredentialResponse(response) {
-            try {
-                const responsePayload = parseJwt(response.credential);
+// Reemplaza únicamente tu función handleCredentialResponse por esta versión:
+function handleCredentialResponse(response) {
+    try {
+        const responsePayload = parseJwt(response.credential);
 
-                document.getElementById('user-name').textContent = responsePayload.name;
-                document.getElementById('user-email').textContent = responsePayload.email;
-                document.getElementById('user-picture').src = responsePayload.picture;
+        // Nombre del archivo HTML que quieres jalar e inyectar dinámicamente
+        const archivoParaCargar = "plataforma.html";
 
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('content-screen').style.display = 'block';
-            } catch (error) {
-                console.error("Error en autenticación:", error);
-                alert("Ocurrió un problema leyendo tu cuenta de Google.");
-            }
-        }
+        // Usamos fetch para jalar el código del otro archivo de forma transparente
+        fetch(archivoParaCargar)
+            .then(res => {
+                if (!res.ok) throw new Error("No se pudo cargar el archivo " + archivoParaCargar);
+                return res.text();
+            })
+            .then(htmlDeLaPlataforma => {
+                // 1. Limpiamos y preparamos el fondo de la pantalla
+                document.body.innerHTML = "";
+                document.body.style.background = "white";
+                document.body.style.height = "auto";
+                document.body.style.display = "block";
+
+                // 2. Inyectamos una barra de bienvenida con los datos reales de Google
+                const barraUsuario = `
+                    <div style="display:flex; align-items:center; justify-content:space-between; background:#f8f9fa; padding:10px 20px; border-bottom:1px solid #e9ecef; font-family:'Segoe UI',sans-serif;">
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <img src="${responsePayload.picture}" alt="Avatar" style="width:40px; height:40px; border-radius:50%; border:2px solid #764ba2;">
+                            <div style="text-align:left;">
+                                <div style="font-size:14px; font-weight:bold; color:#333;">${responsePayload.name}</div>
+                                <div style="font-size:12px; color:#666;">${responsePayload.email}</div>
+                            </div>
+                        </div>
+                        <button onclick="window.location.reload();" style="background:#dc3545; color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-size:13px; font-weight:600;">Cerrar Sesión</button>
+                    </div>
+                `;
+
+                // 3. Colocamos la barra de usuario seguida de todo el HTML que jalamos de tu otro archivo
+                document.body.innerHTML = barraUsuario + htmlDeLaPlataforma;
+
+                // 4. Forzamos a JavaScript a leer de nuevo los scripts modulares si los tienes (como tu script.js)
+                const scriptOriginal = document.createElement("script");
+                scriptOriginal.type = "module";
+                scriptOriginal.src = "script.js";
+                document.body.appendChild(scriptOriginal);
+            })
+            .catch(err => {
+                console.error("Error al jalar el archivo externo:", err);
+                document.body.innerHTML = `<p style="color:red; text-align:center; padding:20px;">Error al cargar la plataforma. Asegúrate de que el archivo existe en GitHub.</p>`;
+            });
+
+    } catch (error) {
+        console.error("Error en autenticación:", error);
+        alert("Ocurrió un problema leyendo tu cuenta de Google.");
+    }
+}
+
 
         function logout() {
             if (window.google && google.accounts && google.accounts.id) {

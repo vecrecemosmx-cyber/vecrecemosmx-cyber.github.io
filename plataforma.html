@@ -1,0 +1,61 @@
+    <header>
+        <h1>Plataforma de Práctica Fonética</h1>
+    </header>
+
+    <main class="container">
+        <!-- Tarjeta de Instrucciones Generales -->
+        <section class="instructions-card">
+            <h2>Instrucciones del Ejercicio</h2>
+            <p id="text-instructions">Escucha el audio de cada fila y analiza la palabra. Llena las celdas numéricas con un solo dígito, selecciona los fonemas correspondientes en el menú desplegable y, de forma opcional, escribe la transcripción fonética. Pasa el cursor sobre el botón <strong>?</strong> de cada cabecera para ver la instrucción detallada.</p>
+            
+            <div class="audio-container">
+                <button id="btn-audio-main" class="btn-primary">🔊 Audio de Instrucciones Generales</button>
+                <audio id="audio-instruction-main" src="instrucciones.mp3"></audio>
+            </div>
+        </section>
+
+        <!-- Contenedor Dinámico del Ejercicio -->
+        <section class="exercise-container">
+            <div class="table-header">
+                <h3>Enfoque Actual: <span id="fonema-focus">/ə/</span></h3>
+                <span id="table-indicator" class="badge">Tabla 1 / 5</span>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+    <tr>
+        <th>Palabra <button class="btn-help" data-tooltip="Palabra">?</button></th>
+        <th># de F <button class="btn-help" data-tooltip="¿Cuántos fonemas o sonidos forman la palabra?">?</button></th>
+        <th># de FC <button class="btn-help" data-tooltip="¿Cuántos fonemas consonantes hay en la palabra?">?</button></th>
+        <th># de FV <button class="btn-help" data-tooltip="¿Cuántos fonemas vocales hay en la palabra?">?</button></th>
+        <th>Pos. del<br>Énfasis <button class="btn-help" data-tooltip="¿Cuál es el lugar del fonema vocal que lleva el énfasis en la palabra?">?</button></th>
+        <th id="th-dinamico">Posición de ... <button class="btn-help" data-tooltip="¿Cuál es el lugar del fonema vocal que se practica?">?</button></th>
+        <!-- ... columnas anteriores ... -->
+<th class="col-futura">Fonemas <button class="btn-help" data-tooltip="¿Cuáles fonemas vocales identificas en la palabra?">?</button></th>
+<th class="col-futura">Transcrito IPA <button class="btn-help" data-tooltip="Escribe la palabra en fonemas IPA">?</button></th>
+    </tr>
+</thead>
+                    <tbody id="table-body">
+                        <!-- Las 6 filas se inyectan dinámicamente desde JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Navegación entre las 5 tablas -->
+            <div class="navigation-controls">
+                <button id="btn-prev" class="btn-nav">⬅️ Anterior</button>
+                <button id="btn-next" class="btn-nav">Siguiente ➡️</button>
+            </div>
+        </section>
+
+        <!-- Panel de Control del Maestro -->
+        <section class="teacher-panel">
+            <h3>Sección de Envío y Revisión</h3>
+            <p>Al finalizar las 5 tablas, guarda tu progreso localmente o descarga el reporte final para enviárselo a tu profesor.</p>
+            <div class="action-buttons">
+                <button id="btn-save" class="btn-success">💾 Guardar Progreso</button>
+                <button id="btn-export" class="btn-secondary">📥 Descargar Reporte (.TXT)</button>
+            </div>
+        </section>
+    </main>
