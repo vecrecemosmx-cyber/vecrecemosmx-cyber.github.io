@@ -1,20 +1,19 @@
 /* ==========================================================================
-   1. RESET Y CONFIGURACIÓN MUNDIAL (VARIABLES COMPARTIDAS)
+   1. RESET Y CONFIGURACIÓN BASE (VARIABLES INSPIRADAS EN EL UI MÓVIL)
    ========================================================================== */
 :root {
-    --bg-login: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-    --bg-plataforma: #f8fafc;
-    --primary: #6366f1;
-    --primary-hover: #4f46e5;
-    --text-main: #1e293b;
-    --text-muted: #64748b;
-    --border-color: #e2e8f0;
-    --white: #ffffff;
-    --success: #10b981;
+    --bg-login: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --bg-plataforma: #f8fafc; /* Gris limpio móvil */
+    --primary: #0284c7;        /* Azul de la Tarjeta Fonema */
+    --primary-hover: #0369a1;
+    --success: #10b981;        /* Verde de la Tarjeta Palabra */
     --success-hover: #059669;
-    --danger: #ef4444;
-    --danger-hover: #dc2626;
-    --warning: #f59e0b;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: #cbd5e1;
+    --white: #ffffff;
+    --danger: #dc3545;
+    --danger-hover: #bd2130;
 }
 
 * {
@@ -26,9 +25,9 @@
 }
 
 /* ==========================================================================
-   2. INTERRUPTOR ESTRUCTURAL (LOGIN VS PLATAFORMA)
+   2. CONTROL DE PANTALLAS (LOGIN VS INTERFAZ)
    ========================================================================== */
-/* Estado Inicial: Pantalla de Login */
+/* Estado Inicial: Login centrado */
 body {
     background: var(--bg-login);
     height: 100vh;
@@ -36,150 +35,133 @@ body {
     justify-content: center;
     align-items: center;
     color: var(--text-main);
-    padding: 1.5rem;
+    padding: 20px;
 }
 
-/* Estado Activo: Despierta dinámicamente con JavaScript */
+/* Estado Activo: Transición fluida a la plataforma */
 body.plataforma-body {
     background-color: var(--bg-plataforma) !important;
     background: var(--bg-plataforma) !important;
     height: auto !important;
     min-height: 100vh !important;
-    display: block !important;
-    padding-bottom: 80px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 20px !important;
+    padding: 20px !important;
 }
 
 /* ==========================================================================
-   3. ESTILOS EXCLUSIVOS: INTERFAZ DE LOGIN
+   3. ESTILOS DE LA COMPAÑÍA: TARJETA DE LOGIN ORIGINAL
    ========================================================================== */
 .card {
     background: var(--white);
-    padding: 3rem 2.5rem;
-    border-radius: 16px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    padding: 40px;
+    border-radius: 24px; /* Suavizado como el nuevo estilo */
+    box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.08);
     text-align: center;
     width: 100%;
-    max-width: 420px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 400px;
 }
 
 .card h1 {
-    color: #0f172a;
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    letter-spacing: -0.5px;
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 24px;
 }
 
 .card p {
     color: var(--text-muted);
-    font-size: 15px;
-    line-height: 1.5;
-    margin-bottom: 32px;
+    margin-bottom: 30px;
+    font-size: 14px;
 }
 
 .google-btn-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 15px;
-    min-height: 50px;
+    margin-top: 10px;
+    min-height: 44px;
 }
 
 /* ==========================================================================
-   4. ESTILOS EXCLUSIVOS: MAQUETACIÓN DE LA PLATAFORMA EDUCATIVA
+   4. MAQUETACIÓN PREMIUM DE LA PLATAFORMA (ENFOQUE DE REJILLA EN CELULARES)
    ========================================================================== */
 header {
     background-color: #0f172a;
     color: var(--white);
     text-align: center;
-    padding: 2rem 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-header h1 {
-    font-size: 24px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
+    padding: 1.5rem;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 1250px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 .container {
-    max-width: 1300px;
-    margin: 2.5rem auto;
-    padding: 0 1.5rem;
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-/* Tarjetas Educativas */
+/* --- TRANSFORMACIÓN DE LAS TARJETAS (ESTILO .TARJETA MÓVIL) --- */
 .instructions-card, .exercise-container, .teacher-panel {
-    background: var(--white);
-    border-radius: 14px;
-    padding: 2.5rem;
-    margin-bottom: 2.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    background-color: var(--white);
+    border-radius: 24px; /* Curvatura del estilo móvil pedido */
+    padding: 30px 20px;
+    box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.08);
     border: 1px solid var(--border-color);
 }
 
 h2, h3 {
-    color: #0f172a;
+    color: var(--text-main);
     font-weight: 700;
-    margin-bottom: 1.25rem;
-    letter-spacing: -0.3px;
+    margin-bottom: 1rem;
 }
 
-h2 { font-size: 22px; }
-h3 { font-size: 18px; }
-
 #text-instructions {
-    color: #334155;
-    font-size: 15px;
+    color: var(--text-muted);
+    font-size: 14px;
     line-height: 1.6;
     margin-bottom: 1.5rem;
 }
 
-/* Contenedor de Audio Principal */
-.audio-container {
-    margin-top: 1rem;
-}
-
-/* Cabecera de la Tabla Informativa */
+/* Cabecera del Ejercicio (Estilo .tarjeta-fonema combinado) */
 .table-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 1rem;
+    border: 3px solid var(--primary); /* Borde azul de tu fonema móvil */
+    background-color: #f0f9ff;
+    padding: 15px 20px;
+    border-radius: 16px;
     margin-bottom: 1.5rem;
 }
 
-.table-header h3 {
-    margin-bottom: 0;
-}
-
 #fonema-focus {
+    font-family: 'Times New Roman', serif;
+    font-size: 28px;
+    font-weight: bold;
     color: var(--primary);
-    background: #e0e7ff;
-    padding: 2px 10px;
-    border-radius: 6px;
-    font-family: monospace;
-    font-size: 20px;
 }
 
 /* ==========================================================================
-   5. DISEÑO DE LA TABLA DINÁMICA PREMIUM
+   5. DISEÑO DE LA TABLA INTEGRADO CON CONTROLES INTERACTIVOS MÓVILES
    ========================================================================== */
 .table-responsive {
     overflow-x: auto;
     margin: 1.5rem 0;
     border: 1px solid var(--border-color);
-    border-radius: 10px;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    border-radius: 16px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 1100px;
-    background-color: var(--white);
+    min-width: 1000px;
+    background: var(--white);
 }
 
 th, td {
@@ -191,106 +173,111 @@ th, td {
 
 th {
     background-color: #f1f5f9;
-    color: #475569;
-    font-weight: 600;
-    font-size: 13px;
+    color: var(--text-muted);
+    font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    border-top: none;
-}
-
-tbody tr {
-    transition: background-color 0.15s ease;
+    font-weight: 700;
 }
 
 tbody tr:hover {
     background-color: #f8fafc;
 }
 
-/* ==========================================================================
-   6. COMPONENTES INTERNOS DE LAS CELDAS (INPUTS Y DROPDOWNS)
-   ========================================================================== */
-/* Celdas Numéricas Pequeñas */
+/* --- BOTÓN AUDIO FILA (ESTILO CIRCULAR/INTERACTIVO) --- */
+.btn-audio-row {
+    background-color: var(--success); /* Verde del cuadro de palabra */
+    color: var(--white);
+    border: none;
+    padding: 10px 16px;
+    border-radius: 50px; /* Redondeado simulando el botón móvil */
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+    transition: transform 0.1s ease, background-color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn-audio-row:active {
+    transform: scale(0.93);
+    background-color: var(--success-hover);
+}
+
+/* Input Digital Estilo Grafema */
 .input-digit {
     width: 48px;
     height: 38px;
-    padding: 0.25rem;
     text-align: center;
-    border: 1.5px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-main);
-    transition: all 0.2s ease;
+    border: 2px solid var(--border-color);
+    border-radius: 12px; /* Esquinas de los botones de grafema móvil */
+    font-size: 16px;
+    font-weight: 700;
+    color: #334155;
+    background-color: #f1f5f9;
+    transition: all 0.1s ease;
 }
 
 .input-digit:focus {
-    border-color: var(--primary);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    border-color: var(--success);
     background-color: var(--white);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 
-/* Caja de Transcripción IPA */
+/* Input Transcripción IPA */
 .input-ipa {
     width: 100%;
     height: 38px;
-    padding: 0 0.75rem;
-    border: 1.5px solid var(--border-color);
-    border-radius: 8px;
+    padding: 0 10px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
     font-size: 14px;
-    transition: all 0.2s ease;
 }
 
 .input-ipa:focus {
     border-color: var(--primary);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
 
-/* Menú Desplegable de Fonemas (Estilo Moderno) */
+/* ==========================================================================
+   6. DROPDOWN COMPONENTES MULTISELECCIÓN
+   ========================================================================== */
 .dropdown-container {
     position: relative;
     text-align: left;
     display: inline-block;
-    width: 150px;
+    width: 140px;
 }
 
 .dropdown-button {
     width: 100%;
     height: 38px;
-    padding: 0 0.75rem;
+    padding: 0 10px;
     background: var(--white);
-    border: 1.5px solid var(--border-color);
-    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
     cursor: pointer;
-    font-size: 13.5px;
-    color: #334155;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    transition: all 0.2s ease;
-}
-
-.dropdown-button:hover {
-    border-color: var(--text-muted);
 }
 
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: calc(100% + 4px);
+    top: 100%;
     left: 0;
     right: 0;
     background: var(--white);
     border: 1px solid var(--border-color);
-    max-height: 200px;
+    max-height: 180px;
     overflow-y: auto;
-    z-index: 99;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    border-radius: 8px;
-    padding: 6px 0;
+    z-index: 500;
+    box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
 }
 
 .dropdown-container.open .dropdown-menu {
@@ -301,111 +288,61 @@ tbody tr:hover {
     padding: 8px 12px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 13.5px;
-    color: #334155;
+    gap: 8px;
+    font-size: 13px;
     cursor: pointer;
-    transition: background-color 0.1s ease;
 }
 
 .dropdown-item:hover {
     background-color: #f1f5f9;
-    color: var(--text-main);
-}
-
-.dropdown-item input[type="checkbox"] {
-    width: 15px;
-    height: 15px;
-    accent-color: var(--primary);
-    cursor: pointer;
 }
 
 /* ==========================================================================
-   7. SISTEMA DE BOTONES Y ACCIONES
+   7. SISTEMA DE CONTROLES GENERALES Y AYUDAS
    ========================================================================== */
-/* Botón Escuchar de cada Fila */
-.btn-audio-row {
-    background-color: #eff6ff;
-    color: #2563eb;
-    border: 1px solid #bfdbfe;
-    padding: 8px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.btn-audio-row:hover {
-    background-color: #2563eb;
-    color: var(--white);
-    border-color: #2563eb;
-    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
-}
-
-/* Controles de Navegación del Ejercicio */
 .navigation-controls {
     display: flex;
     justify-content: space-between;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
 }
 
 .btn-nav, .btn-primary, .btn-success, .btn-secondary {
     padding: 0.75rem 1.5rem;
     border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
+    border-radius: 12px;
+    font-weight: 700;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
+    transition: transform 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .btn-nav {
-    background-color: #1e293b;
+    background-color: var(--primary); /* Azul del fonema */
     color: var(--white);
-    width: 140px;
+    width: 130px;
 }
 
-.btn-nav:hover:not(:disabled) {
-    background-color: #0f172a;
-    box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2);
-}
+.btn-nav:active:not(:disabled) { transform: scale(0.95); color: var(--primary-hover); }
+.btn-nav:disabled { background-color: var(--border-color); color: var(--text-muted); cursor: not-allowed; }
 
-.btn-nav:disabled {
-    background-color: var(--border-color);
-    color: var(--text-muted);
-    cursor: not-allowed;
-}
-
-/* Botones del Maestro */
 .btn-primary { background-color: #64748b; color: var(--white); }
-.btn-primary:hover { background-color: #475569; }
-
-.btn-success { background-color: var(--success); color: var(--white); }
-.btn-success:hover { background-color: var(--success-hover); }
-
+.btn-success { background-color: var(--success); color: var(--white); box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2); }
+.btn-success:active { transform: scale(0.95); }
 .btn-secondary { background-color: #475569; color: var(--white); }
-.btn-secondary:hover { background-color: #334155; }
 
 .action-buttons {
     display: flex;
-    gap: 1.25rem;
-    margin-top: 1.25rem;
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
-/* ==========================================================================
-   8. COMPONENTES DE AYUDA Y MARCADORES (TOOLTIPS & BADGES)
-   ========================================================================== */
 .badge {
-    background-color: #ffedd5;
-    color: #ea580c;
+    background-color: #e0f2fe;
+    color: #0369a1;
     padding: 6px 14px;
-    border-radius: 9999px;
+    border-radius: 50px;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .btn-help {
@@ -423,33 +360,27 @@ tbody tr:hover {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s ease;
-}
-
-.btn-help:hover {
-    background-color: #475569;
 }
 
 .btn-help::after {
     content: attr(data-tooltip);
     position: absolute;
-    bottom: 140%;
+    bottom: 130%;
     left: 50%;
-    transform: translateX(-50%) scale(0.9);
+    transform: translateX(-50%) scale(0);
     background-color: #0f172a;
     color: var(--white);
-    padding: 10px 14px;
+    padding: 8px 12px;
     border-radius: 8px;
     font-size: 12px;
     white-space: normal;
-    width: 240px;
+    width: 220px;
     text-align: center;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-    z-index: 9999;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    z-index: 999;
     opacity: 0;
-    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease;
+    transition: transform 0.15s, opacity 0.15s;
     pointer-events: none;
-    line-height: 1.4;
     font-weight: normal;
 }
 
