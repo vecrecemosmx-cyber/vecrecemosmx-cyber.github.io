@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
-<head link rel="stylesheet" href="style.css">
+<head 
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceso Real con Google</title>
@@ -200,11 +201,10 @@ function handleCredentialResponse(response) {
                 return res.text();
             })
             .then(htmlDeLaPlataforma => {
-                // 1. Limpiamos y preparamos el fondo de la pantalla
+                // 1. Limpiamos el contenido e invocamos la clase del nuevo UI profesional
                 document.body.innerHTML = "";
-                document.body.style.background = "white";
-                document.body.style.height = "auto";
-                document.body.style.display = "block";
+                document.body.className = "plataforma-body";
+
 
                 // 2. Inyectamos una barra de bienvenida con los datos reales de Google
                 const barraUsuario = `
