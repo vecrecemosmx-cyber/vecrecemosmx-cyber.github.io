@@ -34,19 +34,24 @@ header {
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.container {
-    max-width: 1250px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+/* Modifica tu clase .container para que quede así: */
+body.plataforma-body .container {
+    max-width: 1250px !important;
+    margin: 2rem auto !important;
+    padding: 0 1rem !important;
+    display: block !important;
 }
 
-/* --- TARJETAS --- */
-.instructions-card, .exercise-container, .teacher-panel {
-    background: #ffffff;
-    border-radius: 8px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+/* Modifica la regla de tus tarjetas para asegurar su fondo blanco */
+body.plataforma-body .instructions-card, 
+body.plataforma-body .exercise-container, 
+body.plataforma-body .teacher-panel {
+    background: #ffffff !important;
+    border-radius: 8px !important;
+    padding: 2rem !important;
+    margin-bottom: 2rem !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
+    max-width: 100% !important; /* Evita que se encojan como la tarjeta de login */
 }
 
 h2, h3 {
