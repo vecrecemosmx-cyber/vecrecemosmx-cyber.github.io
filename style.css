@@ -1,14 +1,26 @@
 /* --- CONFIGURACIÓN BASE --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
+/* Estilo por defecto: Pantalla de Login */
 body {
-    background-color: #f0f4f8;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #2c3e50;
+}
+
+/* Cambios estructurales inmediatos al iniciar sesión */
+body.plataforma-body {
+    background-color: #f0f4f8;
+    height: auto;
+    display: block;
     padding-bottom: 60px;
 }
 
@@ -136,7 +148,7 @@ th {
     font-size: 0.95rem;
 }
 
-/* --- DROPDOWN MULTISELECCIÓN PERSONALIZADO --- */
+/* --- DROPDOWN MULTISELECCIÓN --- */
 .dropdown-container {
     position: relative;
     text-align: left;
@@ -151,7 +163,6 @@ th {
     border: 1px solid #bdc3c7;
     border-radius: 4px;
     cursor: pointer;
-    text-align: space-between;
     font-size: 0.9rem;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -189,10 +200,6 @@ th {
 
 .dropdown-item:hover {
     background-color: #f1f2f6;
-}
-
-.dropdown-item input {
-    cursor: pointer;
 }
 
 /* --- BOTONES --- */
@@ -241,149 +248,37 @@ th {
     border-radius: 20px;
     font-size: 0.9rem;
 }
-/* Ocultar columnas para la versión inicial de estudiantes */
+
 .col-futura {
     display: none;
 }
-/* --- PANTALLA DE LOGIN --- */
-.login-page {
-    background: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 1rem;
-}
 
-.login-card {
-    background: #ffffff;
+/* --- COMPONENTES DEL LOGIN CARD --- */
+.card {
+    background: white;
+    padding: 40px;
     border-radius: 12px;
-    padding: 2.5rem;
-    width: 100%;
-    max-width: 420px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     text-align: center;
-}
-
-.login-header h1 {
-    font-size: 1.6rem;
-    color: #1a252f;
-    margin-bottom: 0.5rem;
-}
-
-.login-header p {
-    font-size: 0.95rem;
-    color: #7f8c8d;
-    margin-bottom: 2rem;
-}
-
-/* Botón de Google Estilo Oficial */
-.btn-google {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
     width: 100%;
-    background-color: #ffffff;
-    color: #1a252f;
-    border: 1px solid #bdc3c7;
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s, box-shadow 0.2s;
+    max-width: 400px;
 }
 
-.btn-google:hover {
-    background-color: #f8f9fa;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+.card h1 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 24px;
 }
 
-.btn-google img {
-    width: 22px;
-    height: 22px;
+.card p {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 14px;
 }
 
-.login-footer p {
-    font-size: 0.8rem;
-    color: #95a5a6;
-    margin-top: 2rem;
+.google-btn-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    min-height: 44px;
 }
-
-/*Style de la pagina login*/
-        body.plataforma-body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .card {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-
-        p {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-
-        #login-screen { display: block; }
-        #content-screen { display: none; }
-
-        .profile-img {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            margin-bottom: 15px;
-            border: 3px solid #764ba2;
-        }
-
-        .user-name {
-            font-size: 20px;
-            font-weight: bold;
-            color: #222;
-        }
-
-        .user-email {
-            color: #777;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-
-        .logout-btn {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            width: 100%;
-        }
-
-        .logout-btn:hover {
-            background-color: #bd2130;
-        }
-
-        .google-btn-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-            min-height: 44px;
-        }

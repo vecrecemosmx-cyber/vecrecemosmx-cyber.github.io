@@ -1,95 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-<head link rel="stylesheet" href="style.css">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceso Real con Google</title>
-    
+    <!-- Enlace correcto a tu hoja de estilos unificada -->
+    <link rel="stylesheet" href="style.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .card {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-
-        p {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-
-        #login-screen { display: block; }
-        #content-screen { display: none; }
-
-        .profile-img {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            margin-bottom: 15px;
-            border: 3px solid #764ba2;
-        }
-
-        .user-name {
-            font-size: 20px;
-            font-weight: bold;
-            color: #222;
-        }
-
-        .user-email {
-            color: #777;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-
-        .logout-btn {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            width: 100%;
-        }
-
-        .logout-btn:hover {
-            background-color: #bd2130;
-        }
-
-        .google-btn-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-            min-height: 44px;
-        }
-    </style>
 </head>
 <body>
 
@@ -103,38 +20,19 @@
         </div>
     </div>
 
-    <!-- PANTALLA 2: CONTENIDO PROTEGIDO -->
-    <div id="content-screen" class="card">
-        <img id="user-picture" class="profile-img" src="" alt="Foto de perfil">
-        <div id="user-name" class="user-name"></div>
-        <div id="user-email" class="user-email"></div>
-        
-        <div style="text-align: left; margin-bottom: 25px; font-size: 14px; color: #444;">
-            <h3 style="margin-bottom: 8px; color: #764ba2;">¡Acceso Concedido!</h3>
-            <p>Este contenido ahora es visible porque te has autenticado correctamente.</p>
-        </div>
-
-        <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
-    </div>
-
     <script>
-        // Función dedicada a renderizar el botón una vez cargada la API
         function iniciarBotonGoogle() {
             if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
-                // Limpiamos el texto de carga inicial
                 document.getElementById("buttonDiv").innerHTML = "";
 
-                // Inicializar cliente
-                // Asegúrate de que quede exactamente configurado así en tu index.html:
-google.accounts.id.initialize({
-    client_id: "1038098835533-ljnlngi6p1smnlmk3ocla866af4brv6e.apps.googleusercontent.com",
-    callback: handleCredentialResponse, // Requerido para procesar los datos en el navegador
-    context: "signin",
-    ux_mode: "popup", // Mantener estrictamente en popup para páginas estáticas de GitHub
-    auto_select: false
-});
+                google.accounts.id.initialize({
+                    client_id: "://googleusercontent.com",
+                    callback: handleCredentialResponse,
+                    context: "signin",
+                    ux_mode: "popup",
+                    auto_select: false
+                });
 
-                // Renderizar físicamente el botón real
                 google.accounts.id.renderButton(
                     document.getElementById("buttonDiv"),
                     { 
@@ -149,97 +47,78 @@ google.accounts.id.initialize({
             } else {
                 document.getElementById("buttonDiv").innerHTML = 
                 `<p style='color:#dc3545; font-size:12px; font-weight:600;'>
-                    Error: Ejecuta este archivo mediante un servidor local (http://localhost) para saltar la seguridad de Chrome OS.
+                    Error: Ejecuta este archivo mediante un servidor local (http://localhost).
                  </p>`;
             }
         }
 
-        // Forzamos el chequeo al cargar la ventana
         window.onload = function() {
             setTimeout(iniciarBotonGoogle, 600);
         };
 
-        // Decodificador del token JWT de Google
-// Busca y reemplaza únicamente tu función parseJwt por este bloque:
-function parseJwt(token) {
-    try {
-        var base64Url = token.split('.');
-        // CORRECCIÓN: Añadimos [1] para leer el texto del payload directamente
-        var base64 = base64Url[1].replace(/-/g, '+').replace(/_/g, '/');
-        
-        // Añade de forma segura el relleno matemático para Base64
-        while (base64.length % 4) {
-            base64 += '=';
+        function parseJwt(token) {
+            try {
+                var base64Url = token.split('.');
+                var base64 = base64Url[1].replace(/-/g, '+').replace(/_/g, '/');
+                while (base64.length % 4) { base64 += '='; }
+                var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                    return '%' + ('0' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (err) {
+                console.error("Fallo interno al descifrar el token JWT:", err);
+                throw err;
+            }
         }
-        
-        // Decodificación universal robusta con soporte UTF-8 completo
-        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-            return '%' + ('0' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
 
-        return JSON.parse(jsonPayload);
-    } catch (err) {
-        console.error("Fallo interno al descifrar el token JWT:", err);
-        throw err;
-    }
-}
+        function handleCredentialResponse(response) {
+            try {
+                const responsePayload = parseJwt(response.credential);
+                const archivoParaCargar = "plataforma.html";
 
+                fetch(archivoParaCargar)
+                    .then(res => {
+                        if (!res.ok) throw new Error("No se pudo cargar el archivo " + archivoParaCargar);
+                        return res.text();
+                    })
+                    .then(htmlDeLaPlataforma => {
+                        // 1. Cambiamos la clase del body para activar los estilos de la plataforma
+                        document.body.innerHTML = "";
+                        document.body.className = "plataforma-body";
 
-// Reemplaza únicamente tu función handleCredentialResponse por esta versión:
-function handleCredentialResponse(response) {
-    try {
-        const responsePayload = parseJwt(response.credential);
-
-        // Nombre del archivo HTML que quieres jalar e inyectar dinámicamente
-        const archivoParaCargar = "plataforma.html";
-
-        // Usamos fetch para jalar el código del otro archivo de forma transparente
-        fetch(archivoParaCargar)
-            .then(res => {
-                if (!res.ok) throw new Error("No se pudo cargar el archivo " + archivoParaCargar);
-                return res.text();
-            })
-            .then(htmlDeLaPlataforma => {
-                // 1. Limpiamos y preparamos el fondo de la pantalla
-                document.body.innerHTML = "";
-                document.body.style.background = "white";
-                document.body.style.height = "auto";
-                document.body.style.display = "block";
-
-                // 2. Inyectamos una barra de bienvenida con los datos reales de Google
-                const barraUsuario = `
-                    <div style="display:flex; align-items:center; justify-content:space-between; background:#f8f9fa; padding:10px 20px; border-bottom:1px solid #e9ecef; font-family:'Segoe UI',sans-serif;">
-                        <div style="display:flex; align-items:center; gap:12px;">
-                            <img src="${responsePayload.picture}" alt="Avatar" style="width:40px; height:40px; border-radius:50%; border:2px solid #764ba2;">
-                            <div style="text-align:left;">
-                                <div style="font-size:14px; font-weight:bold; color:#333;">${responsePayload.name}</div>
-                                <div style="font-size:12px; color:#666;">${responsePayload.email}</div>
+                        // 2. Inyectamos la barra de bienvenida con los datos reales de Google
+                        const barraUsuario = `
+                            <div style="display:flex; align-items:center; justify-content:space-between; background:#f8f9fa; padding:10px 20px; border-bottom:1px solid #e9ecef; font-family:'Segoe UI',sans-serif; width:100%;">
+                                <div style="display:flex; align-items:center; gap:12px;">
+                                    <img src="${responsePayload.picture}" alt="Avatar" style="width:40px; height:40px; border-radius:50%; border:2px solid #764ba2;">
+                                    <div style="text-align:left;">
+                                        <div style="font-size:14px; font-weight:bold; color:#333;">${responsePayload.name}</div>
+                                        <div style="font-size:12px; color:#666;">${responsePayload.email}</div>
+                                    </div>
+                                </div>
+                                <button onclick="logout();" style="background:#dc3545; color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-size:13px; font-weight:600;">Cerrar Sesión</button>
                             </div>
-                        </div>
-                        <button onclick="window.location.reload();" style="background:#dc3545; color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-size:13px; font-weight:600;">Cerrar Sesión</button>
-                    </div>
-                `;
+                        `;
 
-                // 3. Colocamos la barra de usuario seguida de todo el HTML que jalamos de tu otro archivo
-                document.body.innerHTML = barraUsuario + htmlDeLaPlataforma;
+                        // 3. Colocamos la barra seguida del HTML dinámico
+                        document.body.innerHTML = barraUsuario + htmlDeLaPlataforma;
 
-                // 4. Forzamos a JavaScript a leer de nuevo los scripts modulares si los tienes (como tu script.js)
-                const scriptOriginal = document.createElement("script");
-                scriptOriginal.type = "module";
-                scriptOriginal.src = "script.js";
-                document.body.appendChild(scriptOriginal);
-            })
-            .catch(err => {
-                console.error("Error al jalar el archivo externo:", err);
-                document.body.innerHTML = `<p style="color:red; text-align:center; padding:20px;">Error al cargar la plataforma. Asegúrate de que el archivo existe en GitHub.</p>`;
-            });
+                        // 4. Inyectamos el script modular
+                        const scriptOriginal = document.createElement("script");
+                        scriptOriginal.type = "module";
+                        scriptOriginal.src = "script.js";
+                        document.body.appendChild(scriptOriginal);
+                    })
+                    .catch(err => {
+                        console.error("Error al jalar el archivo externo:", err);
+                        document.body.innerHTML = `<p style="color:red; text-align:center; padding:20px;">Error al cargar la plataforma.</p>`;
+                    });
 
-    } catch (error) {
-        console.error("Error en autenticación:", error);
-        alert("Ocurrió un problema leyendo tu cuenta de Google.");
-    }
-}
-
+            } catch (error) {
+                console.error("Error en autenticación:", error);
+                alert("Ocurrió un problema leyendo tu cuenta de Google.");
+            }
+        }
 
         function logout() {
             if (window.google && google.accounts && google.accounts.id) {
