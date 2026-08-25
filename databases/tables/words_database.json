@@ -1,0 +1,902 @@
+[
+ {
+   "fonema_id": 1,
+   "word": "About",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 2,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 1,
+   "word": "Company",
+   "f": 7,
+   "fc": 4,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 1,
+   "word": "Problem",
+   "f": 7,
+   "fc": 5,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 1,
+   "word": "System",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 1,
+   "word": "Important",
+   "f": 9,
+   "fc": 6,
+   "fv": 3,
+   "stress": 2,
+   "posVocal": 3
+ },
+ {
+   "fonema_id": 1,
+   "word": "Million",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 1,
+   "word": "Support",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 2,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 1,
+   "word": "Local",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 1,
+   "word": "Open",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 1,
+   "word": "Person",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 1,
+   "word": "Human",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 1,
+   "word": "Computer",
+   "f": 8,
+   "fc": 5,
+   "fv": 3,
+   "stress": 2,
+   "posVocal": 13
+ },
+ {
+   "fonema_id": 1,
+   "word": "Development",
+   "f": 11,
+   "fc": 7,
+   "fv": 4,
+   "stress": 2,
+   "posVocal": 24
+ },
+ {
+   "fonema_id": 1,
+   "word": "Level",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 1,
+   "word": "Allow",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 2,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 1,
+   "word": "Final",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 1,
+   "word": "Capital",
+   "f": 7,
+   "fc": 4,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 23
+ },
+ {
+   "fonema_id": 1,
+   "word": "Mental",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 1,
+   "word": "Simple",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 1,
+   "word": "Total",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 2,
+   "word": "Business",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 12
+ },
+ {
+   "fonema_id": 2,
+   "word": "System",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 2,
+   "word": "Little",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 2,
+   "word": "Million",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 2,
+   "word": "Building",
+   "f": 6,
+   "fc": 4,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 12
+ },
+ {
+   "fonema_id": 2,
+   "word": "Minute",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 12
+ },
+ {
+   "fonema_id": 2,
+   "word": "History",
+   "f": 7,
+   "fc": 4,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 2,
+   "word": "Limit",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 12
+ },
+ {
+   "fonema_id": 2,
+   "word": "Public",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 2,
+   "word": "City",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 2,
+   "word": "Music",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 2,
+   "word": "Income",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 2,
+   "word": "Living",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 12
+ },
+ {
+   "fonema_id": 2,
+   "word": "Office",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 2,
+   "word": "Pretty",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 2,
+   "word": "Video",
+   "f": 5,
+   "fc": 2,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 2,
+   "word": "Winter",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 2,
+   "word": "Window",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 2,
+   "word": "Simple",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 2,
+   "word": "Ability",
+   "f": 7,
+   "fc": 3,
+   "fv": 4,
+   "stress": 2,
+   "posVocal": 23
+ },
+ {
+   "fonema_id": 3,
+   "word": "Many",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Very",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Any",
+   "f": 3,
+   "fc": 1,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Every",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Member",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Better",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Never",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Center",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Ever",
+   "f": 3,
+   "fc": 1,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Second",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Level",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Record (sust.)",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Letter",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Mental",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Effort",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Development",
+   "f": 11,
+   "fc": 7,
+   "fv": 4,
+   "stress": 2,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 3,
+   "word": "President",
+   "f": 9,
+   "fc": 6,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Enter",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 3,
+   "word": "Effect",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 2,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 3,
+   "word": "Ready",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Family",
+   "f": 6,
+   "fc": 3,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Capital",
+   "f": 7,
+   "fc": 4,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Matter",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Value",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Factor",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Practice",
+   "f": 7,
+   "fc": 5,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Pattern",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Manner",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Animal",
+   "f": 6,
+   "fc": 3,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Standard",
+   "f": 8,
+   "fc": 6,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Activity",
+   "f": 8,
+   "fc": 4,
+   "fv": 4,
+   "stress": 2,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Impact",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 12
+ },
+ {
+   "fonema_id": 4,
+   "word": "Example",
+   "f": 8,
+   "fc": 5,
+   "fv": 3,
+   "stress": 2,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 4,
+   "word": "Character",
+   "f": 7,
+   "fc": 4,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Background",
+   "f": 8,
+   "fc": 5,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Contact",
+   "f": 7,
+   "fc": 5,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 4,
+   "word": "Annual",
+   "f": 5,
+   "fc": 2,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Planet",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "Happening",
+   "f": 7,
+   "fc": 4,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 4,
+   "word": "After",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Company",
+   "f": 7,
+   "fc": 4,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Country",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Number",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Public",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Government",
+   "f": 9,
+   "fc": 6,
+   "fv": 3,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Product",
+   "f": 7,
+   "fc": 5,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 5,
+   "word": "Money",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Result",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 2,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 5,
+   "word": "Husband",
+   "f": 7,
+   "fc": 5,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Income",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 5,
+   "word": "Become",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 2,
+   "posVocal": 2
+ },
+ {
+   "fonema_id": 5,
+   "word": "Summer",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Couple",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Sunday",
+   "f": 5,
+   "fc": 3,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Color",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Double",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Cover",
+   "f": 4,
+   "fc": 2,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Hundred",
+   "f": 7,
+   "fc": 5,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Comfort",
+   "f": 6,
+   "fc": 4,
+   "fv": 2,
+   "stress": 1,
+   "posVocal": 1
+ },
+ {
+   "fonema_id": 5,
+   "word": "Discover",
+   "f": 7,
+   "fc": 4,
+   "fv": 3,
+   "stress": 2,
+   "posVocal": 2
+ }
+]
