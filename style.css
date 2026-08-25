@@ -720,11 +720,17 @@ body {
         align-self: stretch;
         margin: 0 0.25rem;
     }
-    
+
+    /* Aumenta el tamaño del texto para los botones de audio (Azul y Verde de audio) */
+    .audio-btn {
+        font-size: 1.2rem;       /* Incrementado de 1.05rem a 1.2rem */
+        padding: 1rem 2rem;      /* Ajuste sutil de espacio interno para equilibrar */
+    }
+   
     .check-green-btn {
         width: auto;
         padding: 1rem 1.25rem; /* Botón ligeramente más compacto en móvil */
-        font-size: 0.95rem;
+        font-size: 1.2rem;
         white-space: nowrap;
     }
     
