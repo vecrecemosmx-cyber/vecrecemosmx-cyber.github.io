@@ -743,19 +743,6 @@ body {
     }
 }
 
-/* Optimización extra para pantallas ultra pequeñas */
-@media (max-width: 400px) {
-    .progress-container {
-        display: none;
-    }
-    .audio-btn {
-        padding: 0.75rem 1.2rem;
-        font-size: 0.95rem;
-        width: 100%;
-        justify-content: center;
-    }
-}
-
 /* ==========================================================================
    6. DISEÑO RESPONSIVO (EXCLUSIVO PARA CELULARES)
    ========================================================================== */
