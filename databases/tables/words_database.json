@@ -1,12 +1,12 @@
 [
  {
    "fonema_id": 1,
-   "word": "About",
-   "f": 4,
-   "fc": 2,
+   "word": "People",
+   "f": 5,
+   "fc": 3,
    "fv": 2,
-   "stress": 2,
-   "posVocal": 1
+   "stress": 1,
+   "posVocal": 2
  },
  {
    "fonema_id": 1,
