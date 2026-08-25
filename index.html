@@ -1,251 +1,163 @@
 <!DOCTYPE html>
 <html lang="es">
-<head 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso Real con Google</title>
+    <title>Practice Room - American English App</title>
+    <!-- Importamos la tipografía moderna desde Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
+    
+    <!-- Enlace al archivo CSS externo -->
     <link rel="stylesheet" href="style.css">
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .card {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-
-        p {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-
-        #login-screen { display: block; }
-        #content-screen { display: none; }
-
-        .profile-img {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            margin-bottom: 15px;
-            border: 3px solid #764ba2;
-        }
-
-        .user-name {
-            font-size: 20px;
-            font-weight: bold;
-            color: #222;
-        }
-
-        .user-email {
-            color: #777;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-
-        .logout-btn {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            width: 100%;
-        }
-
-        .logout-btn:hover {
-            background-color: #bd2130;
-        }
-
-        .google-btn-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-            min-height: 44px;
-        }
-    </style>
 </head>
 <body>
 
-    <!-- PANTALLA 1: INICIO DE SESIÓN -->
-    <div id="login-screen" class="card">
-        <h1>Bienvenido</h1>
-        <p>Inicia sesión para acceder al contenido exclusivo.</p>
-        
-        <div id="buttonDiv" class="google-btn-container">
-            <span style="color: #888; font-size: 13px;">Iniciando servicio de Google...</span>
+    <!-- BARRA SUPERIOR ACTUALIZADA CON BOTÓN DE HAMBURGUESA -->
+    <header class="app-header">
+        <div class="header-left">
+            <!-- Botón de hamburguesa exclusivo para celulares -->
+            <button id="menu-toggle" class="menu-toggle-btn" aria-label="Abrir menú">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <div class="logo">SPEAKEASY</div>
         </div>
-    </div>
-
-    <!-- PANTALLA 2: CONTENIDO PROTEGIDO -->
-    <div id="content-screen" class="card">
-        <img id="user-picture" class="profile-img" src="" alt="Foto de perfil">
-        <div id="user-name" class="user-name"></div>
-        <div id="user-email" class="user-email"></div>
-        
-        <div style="text-align: left; margin-bottom: 25px; font-size: 14px; color: #444;">
-            <h3 style="margin-bottom: 8px; color: #764ba2;">¡Acceso Concedido!</h3>
-            <p>Este contenido ahora es visible porque te has autenticado correctamente.</p>
+        <div class="progress-container">
+            <div class="progress-bar-bg">
+                <div id="progress-bar" class="progress-bar-fill"></div>
+            </div>
+            <span id="progress-text" class="progress-text">Pregunta 1 de 5</span>
         </div>
+        <div class="avatar">JD</div>
+    </header>
 
-        <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
-    </div>
-
-    <script>
-        // Función dedicada a renderizar el botón una vez cargada la API
-        function iniciarBotonGoogle() {
-            if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
-                // Limpiamos el texto de carga inicial
-                document.getElementById("buttonDiv").innerHTML = "";
-
-                // Inicializar cliente
-                // Asegúrate de que quede exactamente configurado así en tu index.html:
-google.accounts.id.initialize({
-    client_id: "1038098835533-ljnlngi6p1smnlmk3ocla866af4brv6e.apps.googleusercontent.com",
-    callback: handleCredentialResponse, // Requerido para procesar los datos en el navegador
-    context: "signin",
-    ux_mode: "popup", // Mantener estrictamente en popup para páginas estáticas de GitHub
-    auto_select: false
-});
-
-                // Renderizar físicamente el botón real
-                google.accounts.id.renderButton(
-                    document.getElementById("buttonDiv"),
-                    { 
-                        type: "standard",
-                        theme: "outline", 
-                        size: "large", 
-                        text: "signin_with", 
-                        shape: "pill",
-                        logo_alignment: "left"
-                    }
-                );
-            } else {
-                document.getElementById("buttonDiv").innerHTML = 
-                `<p style='color:#dc3545; font-size:12px; font-weight:600;'>
-                    Error: Ejecuta este archivo mediante un servidor local (http://localhost) para saltar la seguridad de Chrome OS.
-                 </p>`;
-            }
-        }
-
-        // Forzamos el chequeo al cargar la ventana
-        window.onload = function() {
-            setTimeout(iniciarBotonGoogle, 600);
-        };
-
-        // Decodificador del token JWT de Google
-// Busca y reemplaza únicamente tu función parseJwt por este bloque:
-function parseJwt(token) {
-    try {
-        var base64Url = token.split('.');
-        // CORRECCIÓN: Añadimos [1] para leer el texto del payload directamente
-        var base64 = base64Url[1].replace(/-/g, '+').replace(/_/g, '/');
+    <!-- INTERFAZ DE DOS COLUMNAS (MENÚ + PRÁCTICA) -->
+    <div class="app-layout">
         
-        // Añade de forma segura el relleno matemático para Base64
-        while (base64.length % 4) {
-            base64 += '=';
-        }
-        
-        // Decodificación universal robusta con soporte UTF-8 completo
-        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-            return '%' + ('0' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
+        <!-- MENÚ LATERAL IZQUIERDO -->
+        <aside id="sidebar" class="sidebar">
+            <h2 class="sidebar-title">Ejercicios de Práctica</h2>
+            <ul class="sidebar-menu">
+                <li class="menu-item active">
+                    <span class="menu-number">1</span> Vocales cortas
+                </li>
+                <li class="menu-item">
+                    <span class="menu-number">2</span> Vocales largas
+                </li>
+                <li class="menu-item">
+                    <span class="menu-number">3</span> Comparando cortas VS largas
+                </li>
+                <li class="menu-item">
+                    <span class="menu-number">4</span> Diptongos
+                </li>
+                <li class="menu-item">
+                    <span class="menu-number">5</span> Consonantes sonoras
+                </li>
+                <li class="menu-item">
+                    <span class="menu-number">6</span> Consonantes no sonoras
+                </li>
+                <li class="menu-item">
+                    <span class="menu-number">7</span> Otras consonantes
+                </li>
+            </ul>
+        </aside>
 
-        return JSON.parse(jsonPayload);
-    } catch (err) {
-        console.error("Fallo interno al descifrar el token JWT:", err);
-        throw err;
-    }
-}
+        <!-- CONTENIDO PRINCIPAL DE PRÁCTICA -->
+        <main class="main-container">
 
+            <!-- Menú desplegable para cambiar de fonema/lección (REUBICADO ARRIBA) -->
+            <select id="fonema-select" class="fonema-dropdown font-dropdown-top">
+                <option value="" disabled selected hidden>Elige un fonema para practicar</option>
+                <option value="ə">Selección: Fonema /ə/</option>
+                <option value="ɪ">Selección: Fonema /ɪ/</option>
+                <option value="ɛ">Selección: Fonema /ɛ/</option>
+                <option value="æ">Selección: Fonema /æ/</option>
+                <option value="ʌ">Selección: Fonema /ʌ/</option>
+            </select>
 
-// Reemplaza únicamente tu función handleCredentialResponse por esta versión:
-function handleCredentialResponse(response) {
-    try {
-        const responsePayload = parseJwt(response.credential);
+            <!-- TARJETA OBJETIVO SÓLO TEXTO -->
+            <div class="instruction-card">
+                <span class="instruction-text">Escucha con atención el audio y escribe la palabra o frase correcta abajo.</span>
+            </div>
 
-        // Nombre del archivo HTML que quieres jalar e inyectar dinámicamente
-        const archivoParaCargar = "plataforma.html";
+            <!-- AREA DE FOCO CENTRAL (AUDIO Y ONDAS) -->
+            <div class="practice-card">
+                <div class="audio-buttons-group">
+                    <button id="play-word-btn" class="audio-btn">
+                        <svg class="ui-icon" viewBox="0 0 24 24" xmlns="http://w3.org">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                        </svg>
+                        <span>Escuchar Palabra</span>
+                    </button>
 
-        // Usamos fetch para jalar el código del otro archivo de forma transparente
-        fetch(archivoParaCargar)
-            .then(res => {
-                if (!res.ok) throw new Error("No se pudo cargar el archivo " + archivoParaCargar);
-                return res.text();
-            })
-            .then(htmlDeLaPlataforma => {
-                // 1. Limpiamos el contenido e invocamos la clase del nuevo UI profesional
-                document.body.innerHTML = "";
-                document.body.className = "plataforma-body";
+                    <button id="play-vocal-btn" class="audio-btn vocal-btn">
+                        <svg class="ui-icon" viewBox="0 0 24 24" xmlns="http://w3.org">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                        </svg>
+                        <span>Vocal Que Se Practica</span>
+                    </button>
+                </div>
 
-
-                // 2. Inyectamos una barra de bienvenida con los datos reales de Google
-                const barraUsuario = `
-                    <div style="display:flex; align-items:center; justify-content:space-between; background:#f8f9fa; padding:10px 20px; border-bottom:1px solid #e9ecef; font-family:'Segoe UI',sans-serif;">
-                        <div style="display:flex; align-items:center; gap:12px;">
-                            <img src="${responsePayload.picture}" alt="Avatar" style="width:40px; height:40px; border-radius:50%; border:2px solid #764ba2;">
-                            <div style="text-align:left;">
-                                <div style="font-size:14px; font-weight:bold; color:#333;">${responsePayload.name}</div>
-                                <div style="font-size:12px; color:#666;">${responsePayload.email}</div>
-                            </div>
-                        </div>
-                        <button onclick="window.location.reload();" style="background:#dc3545; color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-size:13px; font-weight:600;">Cerrar Sesión</button>
+                <!-- CONTENEDOR INTEGRADO: Deslizador sobrepuesto encima de las ondas -->
+                <div class="interactive-wave-box">
+                    
+                    <!-- 1. El control deslizante transparente va arriba flotando -->
+                    <input type="range" id="speed-slider" class="speed-slider over-wave-slider" min="0.5" max="1.5" step="0.05" value="1.25" aria-label="Velocidad de reproducción">
+                    
+                    <!-- 2. Las ondas se quedan de fondo pero visibles -->
+                    <div class="wave-container">
+                        <div class="wave-bar" style="height: 15px;"></div>
+                        <div class="wave-bar" style="height: 25px;"></div>
+                        <div class="wave-bar" style="height: 35px;"></div>
+                        <div class="wave-bar" style="height: 20px;"></div>
+                        <div class="wave-bar" style="height: 30px;"></div>
+                        <div class="wave-bar" style="height: 10px;"></div>
+                        <div class="wave-bar" style="height: 28px;"></div>
                     </div>
-                `;
 
-                // 3. Colocamos la barra de usuario seguida de todo el HTML que jalamos de tu otro archivo
-                document.body.innerHTML = barraUsuario + htmlDeLaPlataforma;
+                    <!-- 3. Indicador flotante divertido de velocidad actual -->
+                    <span id="speed-bubble" class="speed-bubble-indicator">0.90x</span>
+                </div>
 
-                // 4. Forzamos a JavaScript a leer de nuevo los scripts modulares si los tienes (como tu script.js)
-                const scriptOriginal = document.createElement("script");
-                scriptOriginal.type = "module";
-                scriptOriginal.src = "script.js";
-                document.body.appendChild(scriptOriginal);
-            })
-            .catch(err => {
-                console.error("Error al jalar el archivo externo:", err);
-                document.body.innerHTML = `<p style="color:red; text-align:center; padding:20px;">Error al cargar la plataforma. Asegúrate de que el archivo existe en GitHub.</p>`;
-            });
+            </div>
 
-    } catch (error) {
-        console.error("Error en autenticación:", error);
-        alert("Ocurrió un problema leyendo tu cuenta de Google.");
-    }
-}
+            <!-- TARJETA DE RESPUESTA ESCRITA DIVIDIDA -->
+            <div class="response-card split-response-card">
+                <div class="response-left-pane">
+                    <label for="student-answer" class="response-title">TU RESPUESTA</label>
+                    <input type="text" id="student-answer" class="response-input" placeholder="Escribe el número aquí..." maxlength="3" autocomplete="off" inputmode="numeric" pattern="[0-9]*">
+                    <div id="error-message" class="error-text"></div>
+                </div>
+                <div class="response-divider-line"></div>
+                <div class="response-right-pane">
+                    <button id="check-answer-btn" class="check-green-btn">COMPROBAR</button>
+                </div>
+            </div>
 
+            <!-- TARJETA DE RETROALIMENTACIÓN -->
+            <div id="feedback-card" class="feedback-card hidden">
+                <p class="feedback-title">RESULTADO</p>
+                <p id="feedback-phrase" class="feedback-phrase"></p>
+                <div class="tip-box">
+                    <strong>💡 Tip de acento Americano:</strong> <span id="tip-text"></span>
+                </div>
+            </div>
 
-        function logout() {
-            if (window.google && google.accounts && google.accounts.id) {
-                google.accounts.id.disableAutoSelect();
-            }
-            window.location.reload();
-        }
-    </script>
+            <!-- ACCIONES INTERNAS ACTUALIZADAS -->
+            <div class="card-actions">
+                <button class="report-btn">🛠️ Reportar un problema</button>
+                <div class="navigation-buttons">
+                    <button id="prev-btn" class="back-question-btn hidden">← Pregunta anterior</button>
+                    <button id="action-btn" class="next-btn btn-disabled" disabled>SIGUIENTE PREGUNTA ➔</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- CONEXIÓN DEL ARCHIVO JAVASCRIPT -->
+    <script src="script.js"></script>
 </body>
 </html>

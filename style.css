@@ -1,419 +1,839 @@
 /* ==========================================================================
-   1. RESET Y CONFIGURACIÓN BASE (VARIABLES INSPIRADAS EN EL UI MÓVIL)
+   1. VARIABLES DE COLOR Y CONFIGURACIÓN GENERAL
    ========================================================================== */
 :root {
-    --bg-login: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --bg-plataforma: #f8fafc; /* Gris limpio móvil */
-    --primary: #0284c7;        /* Azul de la Tarjeta Fonema */
-    --primary-hover: #0369a1;
-    --success: #10b981;        /* Verde de la Tarjeta Palabra */
-    --success-hover: #059669;
-    --text-main: #0f172a;
-    --text-muted: #64748b;
-    --border-color: #cbd5e1;
-    --white: #ffffff;
-    --danger: #dc3545;
-    --danger-hover: #bd2130;
+    --bg-main: #F4F7FA;          /* Gris/azul ultra claro para calma */
+    --bg-card: #FFFFFF;          /* Blanco puro para aislar contenido */
+    --text-dark: #1E293B;        /* Azul oscuro profesional para textos */
+    --text-muted: #64748B;       /* Gris para elementos secundarios */
+    --color-blue: #0284C7;       /* Azul base: lógica y concentración */
+    --color-green: #22C55E;      /* Verde: éxito y pronunciación correcta */
+    --color-yellow: #FEF08A;     /* Amarillo suave: atención y fonética */
+    --color-yellow-dark: #CA8A04;/* Texto sobre fondo amarillo */
+    --color-orange: #F97316;     /* Naranja/Coral: acción principal */
+    --bg-sidebar: #0F172A;       /* Fondo oscuro profundo para el menú */
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    -webkit-font-smoothing: antialiased;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-/* ==========================================================================
-   2. CONTROL DE PANTALLAS (LOGIN VS INTERFAZ)
-   ========================================================================== */
-/* Estado Inicial: Login centrado */
 body {
-    background: var(--bg-login);
-    height: 100vh;
+    background-color: var(--bg-main);
+    color: var(--text-dark);
     display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--text-main);
-    padding: 20px;
-}
-
-/* Estado Activo: Transición fluida a la plataforma */
-body.plataforma-body {
-    background-color: var(--bg-plataforma) !important;
-    background: var(--bg-plataforma) !important;
-    height: auto !important;
-    min-height: 100vh !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 20px !important;
-    padding: 20px !important;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* ==========================================================================
-   3. ESTILOS DE LA COMPAÑÍA: TARJETA DE LOGIN ORIGINAL
+   2. MAQUETACIÓN E INTERFAZ BASE (HEADER, LAYOUT, SIDEBAR)
    ========================================================================== */
-.card {
-    background: var(--white);
-    padding: 40px;
-    border-radius: 24px; /* Suavizado como el nuevo estilo */
-    box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.08);
-    text-align: center;
+.app-header {
+    background-color: var(--bg-card);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #E2E8F0;
+    z-index: 10;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-blue);
+    letter-spacing: -0.5px;
+}
+
+/* Botón de hamburguesa móvil (oculto por defecto en escritorio) */
+.menu-toggle-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 100;
+}
+
+.hamburger-line {
     width: 100%;
+    height: 2.5px;
+    background-color: var(--text-dark);
+    border-radius: 99px;
+    transition: all 0.3s ease;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 40%;
     max-width: 400px;
 }
 
-.card h1 {
-    color: #333;
-    margin-bottom: 10px;
-    font-size: 24px;
-}
-
-.card p {
-    color: var(--text-muted);
-    margin-bottom: 30px;
-    font-size: 14px;
-}
-
-.google-btn-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-    min-height: 44px;
-}
-
-/* ==========================================================================
-   4. MAQUETACIÓN PREMIUM DE LA PLATAFORMA (ENFOQUE DE REJILLA EN CELULARES)
-   ========================================================================== */
-header {
-    background-color: #0f172a;
-    color: var(--white);
-    text-align: center;
-    padding: 1.5rem;
-    border-radius: 16px;
+.progress-bar-bg {
+    background-color: #E2E8F0;
+    border-radius: 99px;
+    height: 10px;
     width: 100%;
-    max-width: 1250px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
-.container {
-    width: 100%;
-    max-width: 1250px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* --- TRANSFORMACIÓN DE LAS TARJETAS (ESTILO .TARJETA MÓVIL) --- */
-.instructions-card, .exercise-container, .teacher-panel {
-    background-color: var(--white);
-    border-radius: 24px; /* Curvatura del estilo móvil pedido */
-    padding: 30px 20px;
-    box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--border-color);
-}
-
-h2, h3 {
-    color: var(--text-main);
-    font-weight: 700;
-    margin-bottom: 1rem;
-}
-
-#text-instructions {
-    color: var(--text-muted);
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-}
-
-/* Cabecera del Ejercicio (Estilo .tarjeta-fonema combinado) */
-.table-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 3px solid var(--primary); /* Borde azul de tu fonema móvil */
-    background-color: #f0f9ff;
-    padding: 15px 20px;
-    border-radius: 16px;
-    margin-bottom: 1.5rem;
-}
-
-#fonema-focus {
-    font-family: 'Times New Roman', serif;
-    font-size: 28px;
-    font-weight: bold;
-    color: var(--primary);
-}
-
-/* ==========================================================================
-   5. DISEÑO DE LA TABLA INTEGRADO CON CONTROLES INTERACTIVOS MÓVILES
-   ========================================================================== */
-.table-responsive {
-    overflow-x: auto;
-    margin: 1.5rem 0;
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 1000px;
-    background: var(--white);
-}
-
-th, td {
-    padding: 1rem 0.75rem;
-    text-align: center;
-    vertical-align: middle;
-    border-bottom: 1px solid var(--border-color);
-}
-
-th {
-    background-color: #f1f5f9;
-    color: var(--text-muted);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 700;
-}
-
-tbody tr:hover {
-    background-color: #f8fafc;
-}
-
-/* --- BOTÓN AUDIO FILA (ESTILO CIRCULAR/INTERACTIVO) --- */
-.btn-audio-row {
-    background-color: var(--success); /* Verde del cuadro de palabra */
-    color: var(--white);
-    border: none;
-    padding: 10px 16px;
-    border-radius: 50px; /* Redondeado simulando el botón móvil */
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 700;
-    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
-    transition: transform 0.1s ease, background-color 0.2s;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.btn-audio-row:active {
-    transform: scale(0.93);
-    background-color: var(--success-hover);
-}
-
-/* Input Digital Estilo Grafema */
-.input-digit {
-    width: 48px;
-    height: 38px;
-    text-align: center;
-    border: 2px solid var(--border-color);
-    border-radius: 12px; /* Esquinas de los botones de grafema móvil */
-    font-size: 16px;
-    font-weight: 700;
-    color: #334155;
-    background-color: #f1f5f9;
-    transition: all 0.1s ease;
-}
-
-.input-digit:focus {
-    border-color: var(--success);
-    background-color: var(--white);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
-}
-
-/* Input Transcripción IPA */
-.input-ipa {
-    width: 100%;
-    height: 38px;
-    padding: 0 10px;
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
-    font-size: 14px;
-}
-
-.input-ipa:focus {
-    border-color: var(--primary);
-    outline: none;
-}
-
-/* ==========================================================================
-   6. DROPDOWN COMPONENTES MULTISELECCIÓN
-   ========================================================================== */
-.dropdown-container {
-    position: relative;
-    text-align: left;
-    display: inline-block;
-    width: 140px;
-}
-
-.dropdown-button {
-    width: 100%;
-    height: 38px;
-    padding: 0 10px;
-    background: var(--white);
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 600;
     overflow: hidden;
-    text-overflow: ellipsis;
+}
+
+.progress-bar-fill {
+    background-color: var(--color-blue);
+    height: 100%;
+    width: 20%; 
+    border-radius: 99px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
     white-space: nowrap;
 }
 
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--white);
-    border: 1px solid var(--border-color);
-    max-height: 180px;
-    overflow-y: auto;
-    z-index: 500;
-    box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-}
-
-.dropdown-container.open .dropdown-menu {
-    display: block;
-}
-
-.dropdown-item {
-    padding: 8px 12px;
+.avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #CBD5E1;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    cursor: pointer;
+    justify-content: center;
+    font-weight: 600;
+    color: #475569;
 }
 
-.dropdown-item:hover {
-    background-color: #f1f5f9;
+.app-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr; 
+    flex: 1;
+    min-height: calc(100vh - 73px);  
+}
+
+/* --- MENÚ LATERAL IZQUIERDO --- */
+.sidebar {
+    background-color: var(--bg-sidebar);
+    color: #F8FAFC;
+    padding: 2rem 1.5rem;
+    border-right: 1px solid #1E293B;
+}
+
+.sidebar-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #94A3B8;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.sidebar-menu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #CBD5E1;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.menu-item:hover {
+    background-color: #1E293B;
+    color: white;
+}
+
+.menu-item.active {
+    background-color: var(--color-blue);
+    color: white;
+    font-weight: 600;
+}
+
+.menu-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-color: #1E293B;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #94A3B8;
+}
+
+.menu-item.active .menu-number {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
 }
 
 /* ==========================================================================
-   7. SISTEMA DE CONTROLES GENERALES Y AYUDAS
+   3. AREA CENTRAL DE TRABAJO (TARJETAS DE PRÁCTICA)
    ========================================================================== */
-.navigation-controls {
+.main-container {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 2.5rem;
     display: flex;
-    justify-content: space-between;
-    margin-top: 1.5rem;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.btn-nav, .btn-primary, .btn-success, .btn-secondary {
-    padding: 0.75rem 1.5rem;
+.back-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.ui-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    fill: currentColor;
+}
+
+/* --- TARJETA SUPERIOR DE ENUNCIADO --- */
+.instruction-card {
+    background-color: var(--bg-card);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid #E2E8F0;
+    display: flex;
+    align-items: center;
+}
+
+.instruction-text {
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* --- TARJETA CENTRAL DE AUDIO --- */
+.practice-card {
+    background-color: var(--bg-card);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.audio-buttons-group {
+    display: flex;
+    gap: 1rem; 
+    justify-content: center;
+    flex-wrap: wrap; 
+}
+
+.audio-btn {
+    background-color: var(--color-blue);
+    color: white; 
     border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 99px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.audio-btn:hover {
+    background-color: #0369A1;
+    transform: scale(1.02);
+}
+
+.vocal-btn {
+    background-color: #10B981 !important; 
+}
+
+.vocal-btn:hover {
+    background-color: #059669 !important; 
+}
+
+/* --- ONDA DE SONIDO ANIMADA --- */
+.wave-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 50px;
+    width: 240px;
+}
+
+.wave-bar {
+    width: 5px;
+    background-color: var(--color-blue);
+    border-radius: 99px;
+    animation: pulse 1.2s infinite ease-in-out;
+}
+
+.wave-bar:nth-child(odd) { background-color: #38BDF8; animation-delay: 0.2s; }
+.wave-bar:nth-child(3n) { background-color: #34D399; animation-delay: 0.4s; }
+
+@keyframes pulse {
+    0%, 100% { height: 10px; }
+    50% { height: 45px; }
+}
+
+/* ==========================================================================
+   4. TARJETAS DE RESPUESTA, VALIDACIÓN Y RETROALIMENTACIÓN
+   ========================================================================== */
+.response-card {
+    background-color: var(--bg-card);
+    border-radius: 24px;
+    padding: 2rem;
+    border: 1px solid #E2E8F0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+}
+
+.response-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.response-input {
+    width: 100%;
+    padding: 1.1rem 1.5rem;
+    border: 2px solid #E2E8F0;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.response-input:focus {
+    border-color: var(--color-blue);
+    box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
+}
+
+.error-text {
+    color: var(--color-orange);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    min-height: 20px;
+}
+
+.input-invalid {
+    border-color: var(--color-orange) !important;
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15) !important;
+}
+
+/* --- BLOQUE DE FEEDBACK --- */
+.feedback-card {
+    background-color: var(--bg-card);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid #E2E8F0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.feedback-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.feedback-phrase {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.word-correct {
+    color: var(--color-green);
+    border-bottom: 2px solid var(--color-green);
+    padding-bottom: 2px;
+}
+
+.word-error {
+    color: var(--color-orange);
+    background-color: #FFEDD5;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.tip-box {
+    background-color: #F8FAFC;
+    border-left: 4px solid var(--color-blue);
+    padding: 0.75rem 1rem;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   5. CONTENEDOR DE NAVEGACIÓN Y PIE DE PÁGINA
+   ========================================================================== */
+.card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 1rem;
+}
+
+.report-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.navigation-buttons {
+    display: flex;
+    gap: 12px; 
+    align-items: center;
+}
+
+.back-question-btn {
+    background-color: transparent;
+    color: var(--text-muted);
+    border: 2px solid #E2E8F0;
+    padding: 0.85rem 1.5rem;
     border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.back-question-btn:hover {
+    border-color: #CBD5E1;
+    color: var(--text-dark);
+    background-color: #F8FAFC;
+}
+
+.next-btn {
+    background-color: var(--color-orange);
+    color: white;
+    border: none;
+    padding: 0.85rem 2.5rem;
+    border-radius: 12px;
+    font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: transform 0.1s ease;
-    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.2);
+    transition: background-color 0.2s, transform 0.2s;
 }
 
-.btn-nav {
-    background-color: var(--primary); /* Azul del fonema */
-    color: var(--white);
-    width: 130px;
+.next-btn:hover {
+    background-color: #EA580C;
 }
 
-.btn-nav:active:not(:disabled) { transform: scale(0.95); color: var(--primary-hover); }
-.btn-nav:disabled { background-color: var(--border-color); color: var(--text-muted); cursor: not-allowed; }
+/* --- CLASES DE UTILIDAD --- */
+.hidden {
+    display: none !important;
+}
 
-.btn-primary { background-color: #64748b; color: var(--white); }
-.btn-success { background-color: var(--success); color: var(--white); box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2); }
-.btn-success:active { transform: scale(0.95); }
-.btn-secondary { background-color: #475569; color: var(--white); }
+/* ... Tus estilos anteriores (.response-card, .error-text, etc.) ... */
 
-.action-buttons {
+/* 1. PEGA AQUÍ EL NUEVO BLOQUE GENERAL: */
+.split-response-card {
     display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
 }
-
-.badge {
-    background-color: #e0f2fe;
-    color: #0369a1;
-    padding: 6px 14px;
-    border-radius: 50px;
-    font-size: 13px;
-    font-weight: 700;
+.response-left-pane {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
-
-.btn-help {
-    background-color: #64748b;
-    color: var(--white);
-    border: none;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    font-size: 11px;
-    font-weight: bold;
-    cursor: help;
-    margin-left: 4px;
-    position: relative;
-    display: inline-flex;
+.response-divider-line {
+    width: 2px;
+    background-color: #E2E8F0;
+    align-self: stretch;
+    margin: 0 0.5rem;
+}
+.response-right-pane {
+    display: flex;
     align-items: center;
     justify-content: center;
 }
-
-.btn-help::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 130%;
-    left: 50%;
-    transform: translateX(-50%) scale(0);
-    background-color: #0f172a;
-    color: var(--white);
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 12px;
-    white-space: normal;
-    width: 220px;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    z-index: 999;
-    opacity: 0;
-    transition: transform 0.15s, opacity 0.15s;
-    pointer-events: none;
-    font-weight: normal;
-}
-
-.btn-help:hover::after {
-    transform: translateX(-50%) scale(1);
-    opacity: 1;
-}
-
-.col-futura {
-    display: none;
-}
-
-/* --- ESTILO DEL CONTROL DESLIZANTE DE VELOCIDAD --- */
-input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    height: 6px;
-    background: var(--border-color);
-    border-radius: 5px;
-    outline: none;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--primary);
+.check-green-btn {
+    background-color: var(--color-green);
+    color: white;
+    border: none;
+    padding: 1.1rem 2rem;
+    border-radius: 16px;
+    font-size: 1.05rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: transform 0.1s ease;
+    box-shadow: 0 4px 6px -1px rgba(34, 197, 94, 0.2);
+    transition: background-color 0.2s, transform 0.1s;
+    white-space: nowrap;
+}
+.check-green-btn:hover {
+    background-color: #16A34A;
+}
+.check-green-btn:active {
+    transform: scale(0.98);
+}
+.btn-disabled {
+    background-color: #CBD5E1 !important;
+    color: #94A3B8 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+.font-dropdown-top {
+    align-self: flex-start;
+    width: auto;
+    min-width: 240px;
 }
 
-input[type="range"]::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
+/* ==========================================================================
+   3b. DISEÑO DE CONTROLADOR DE VELOCIDAD SOBREPUESTO (EFECTO INTEGRADO)
+   ========================================================================== */
+.interactive-wave-box {
+    position: relative; /* Base para permitir que los elementos floten encima */
+    width: 260px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+/* Forzamos a que las ondas se queden fijas al fondo pero mantengan sus colores */
+.interactive-wave-box .wave-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none; /* Hace que los clics pasen de largo e impacten al slider */
+    margin: 0;
+}
+
+/* --- LÍNEA CENTRAL DE FONDO PARA EL EFECTO DE OSCILOSCOPIO --- */
+.interactive-wave-box::before {
+    content: "";
+    position: absolute;
+    top: 50%;                    /* La ubica exactamente a la mitad vertical */
+    left: 0;
+    width: 100%;                 /* Se extiende a todo lo largo del controlador */
+    height: 2px;               /* Grosor de la línea delgada */
+    background-color: #CBD5E1;   /* Gris claro sutil que combina con tus bordes */
+    transform: translateY(-50%); /* Centrado geométrico perfecto */
+    z-index: 0;                  /* Se queda al fondo de las ondas y del slider */
+    pointer-events: none;        /* No interfiere con los clics del usuario */
+}
+
+/* El deslizador se estira al 100% por encima de las ondas */
+.over-wave-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: transparent; /* Hace invisible la barra gris estática de fondo */
+    outline: none;
+    z-index: 3; /* Se coloca al frente para recibir los toques táctiles */
+    cursor: pointer;
+    margin: 0;
+}
+
+/* Diseñamos el botón circular flotante (estilo reproductor moderno) */
+.over-wave-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;                 /* Ancho del círculo */
+    height: 20px;                /* Altura del círculo para hacerlo una esfera perfecta */
+    background: var(--color-blue); /* Azul base de tu paleta */
+    border: 3px solid #FFFFFF;   /* Borde blanco grueso para que resalte sobre las ondas */
+    border-radius: 50%;          /* Lo hace completamente redondo */
+    box-shadow: 0 2px 5px rgba(2, 132, 199, 0.4); /* Sombra suave para darle volumen */
+    transition: transform 0.1s ease, background-color 0.2s;
+    z-index: 4;
+}
+
+.over-wave-slider::-webkit-slider-thumb:hover {
+    background: #0369A1;         /* Azul más oscuro al pasar el cursor */
+    transform: scale(1.15);      /* Crece un poco de forma interactiva */
+}
+
+.over-wave-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--color-blue);
+    border: 3px solid #FFFFFF;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(2, 132, 199, 0.4);
+    cursor: pointer;
+    transition: transform 0.1s ease, background-color 0.2s;
+    border: none;
+}
+
+.over-wave-slider::-moz-range-thumb:hover {
+    background: #0369A1;
+    transform: scale(1.15);
+}
+
+/* Burbuja flotante divertida que indica la velocidad actual */
+.speed-bubble-indicator {
+    position: absolute;
+    bottom: -24px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--color-blue);
+    background-color: #E0F2FE;
+    padding: 2px 8px;
+    border-radius: 99px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* 2. TU BLOQUE DE @media (MAX-WIDTH: 768px) SE QUEDA IGUAL ABAJO: */
+@media (max-width: 768px) {
+    .menu-toggle-btn {
+        display: flex;
+    }
+    .app-layout {
+        grid-template-columns: 1fr;
+        position: relative;
+    }
+    .sidebar {
+        position: absolute;
+        top: 0;
+        left: -280px; 
+        width: 280px;
+        height: 100%;
+        z-index: 50;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar.open {
+        left: 0;
+    }
+    .main-container {
+        padding: 1rem 0.75rem;
+        gap: 1rem;
+    }
+    .instruction-text {
+        text-align: center;
+        width: 100%;
+    }
+    .instruction-card {
+        padding: 1.25rem 1rem;
+    }
+    .practice-card {
+        padding: 1.5rem 1rem;
+        gap: 1.25rem;
+    }
+    .response-card {
+        padding: 1.25rem 1rem;
+    }
+    .progress-container {
+        width: 55%;
+    }
+    .progress-text {
+        font-size: 0.75rem;
+    }
+    .card-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    .navigation-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+    .navigation-buttons *, .fonema-dropdown {
+        width: 100%;
+        text-align: center;
+    }
+    .report-btn {
+        text-align: center;
+        padding: 0.5rem 0;
+    }
+
+    /* ==========================================================================
+       6. RESPONSIVE CORREGIDO PARA TARJETA DIVIDIDA (LÍNEA VERTICAL EN CELULARES)
+       ========================================================================== */
+    .split-response-card {
+        flex-direction: row; /* Mantiene las 2 columnas lado a lado en celular */
+        align-items: center;
+        gap: 0.75rem;       /* Espacio más compacto para pantallas pequeñas */
+        padding: 1rem;      /* Reducimos el margen interno de la tarjeta */
+    }
+    
+    .response-divider-line {
+        width: 2px;         /* Mantiene la línea vertical */
+        height: auto;
+        align-self: stretch;
+        margin: 0 0.25rem;
+    }
+    
+    .check-green-btn {
+        width: auto;
+        padding: 1rem 1.25rem; /* Botón ligeramente más compacto en móvil */
+        font-size: 0.95rem;
+        white-space: nowrap;
+    }
+    
+    .font-dropdown-top {
+        width: 100%;        /* El menú de arriba sí ocupa todo el ancho */
+        font-size: 1.15rem;           /* Letra más grande y legible */
+        font-weight: 350;             /* Texto un poco más grueso para destacar */
+        border-radius: 16px;          /* Bordes más redondeados que combinan con tus tarjetas */
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); /* Sutil sombra para darle relieve */
+    }
+}
+
+/* Optimización extra para pantallas ultra pequeñas */
+@media (max-width: 400px) {
+    .progress-container {
+        display: none;
+    }
+    .audio-btn {
+        padding: 0.75rem 1.2rem;
+        font-size: 0.95rem;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   6. DISEÑO RESPONSIVO (EXCLUSIVO PARA CELULARES)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .menu-toggle-btn {
+        display: flex;
+    }
+
+    .app-layout {
+        grid-template-columns: 1fr;
+        position: relative;
+    }
+
+    /* Transformamos el sidebar en un menú flotante deslizable */
+    .sidebar {
+        position: absolute;
+        top: 0;
+        left: -280px; 
+        width: 280px;
+        height: 100%;
+        z-index: 50;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    /* Ajustes críticos para el contenedor principal en móviles */
+    .main-container {
+        padding: 1rem 0.75rem;
+        gap: 1rem;
+    }
+
+    /* Mantenemos tus 1.9rem originales y solo centramos el texto */
+    .instruction-text {
+        text-align: center;
+        width: 100%;
+    }
+
+    .instruction-card {
+        padding: 1.25rem 1rem;
+    }
+
+    /* Optimizamos los espacios de las tarjetas en pantallas pequeñas */
+    .practice-card {
+        padding: 1.5rem 1rem;
+        gap: 1.25rem;
+    }
+
+    .response-card {
+        padding: 1.25rem 1rem;
+    }
+
+    /* Ajustamos el tamaño del contenedor de la barra de progreso */
+    .progress-container {
+        width: 55%;
+    }
+
+    .progress-text {
+        font-size: 0.75rem;
+    }
+
+    /* Acomodo de los botones inferiores en columnas si no caben juntos */
+    .card-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .navigation-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .navigation-buttons *, .fonema-dropdown {
+        width: 100%;
+        text-align: center;
+    }
+
+    .report-btn {
+        text-align: center;
+        padding: 0.5rem 0;
+    }
 }
