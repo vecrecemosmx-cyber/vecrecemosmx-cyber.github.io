@@ -830,3 +830,107 @@ body {
         padding: 0.5rem 0;
     }
 }
+
+/*BLOQUE DE @media (MAX-WIDTH: 320px) CELULARES PEQUEÑOS */
+@media (max-width: 320px) {
+    .menu-toggle-btn {
+        display: flex;
+    }
+    .app-layout {
+        grid-template-columns: 1fr;
+        position: relative;
+    }
+    .sidebar {
+        position: absolute;
+        top: 0;
+        left: -280px; 
+        width: 280px;
+        height: 100%;
+        z-index: 50;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar.open {
+        left: 0;
+    }
+    .main-container {
+        padding: 1rem 0.75rem;
+        gap: 1rem;
+    }
+    .instruction-text {
+        text-align: center;
+        width: 100%;
+    }
+    .instruction-card {
+        padding: 1.25rem 1rem;
+    }
+    .practice-card {
+        padding: 1.5rem 1rem;
+        gap: 1.25rem;
+    }
+    .response-card {
+        padding: 1.25rem 1rem;
+    }
+    .progress-container {
+        width: 55%;
+    }
+    .progress-text {
+        font-size: 0.75rem;
+    }
+    .card-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    .navigation-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+    .navigation-buttons *, .fonema-dropdown {
+        width: 100%;
+        text-align: center;
+    }
+    .report-btn {
+        text-align: center;
+        padding: 0.5rem 0;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE CORREGIDO PARA TARJETA DIVIDIDA (LÍNEA VERTICAL EN CELULARES)
+       ========================================================================== */
+    .split-response-card {
+        flex-direction: row; /* Mantiene las 2 columnas lado a lado en celular */
+        align-items: center;
+        gap: 0.75rem;       /* Espacio más compacto para pantallas pequeñas */
+        padding: 1rem;      /* Reducimos el margen interno de la tarjeta */
+    }
+    
+    .response-divider-line {
+        width: 2px;         /* Mantiene la línea vertical */
+        height: auto;
+        align-self: stretch;
+        margin: 0 0.25rem;
+    }
+
+    /* Aumenta el tamaño del texto para los botones de audio (Azul y Verde de audio) */
+    .audio-btn {
+        font-size: 1.2rem;       /* Incrementado de 1.05rem a 1.2rem */
+        padding: 1rem 2rem;      /* Ajuste sutil de espacio interno para equilibrar */
+    }
+   
+    .check-green-btn {
+        width: auto;
+        padding: 1rem 1.2rem; /* Botón ligeramente más compacto en móvil */
+        font-size: 1.2rem;
+        white-space: nowrap;
+    }
+    
+    .font-dropdown-top {
+        width: 100%;        /* El menú de arriba sí ocupa todo el ancho */
+        font-size: 1.15rem;           /* Letra más grande y legible */
+        font-weight: 350;             /* Texto un poco más grueso para destacar */
+        border-radius: 16px;          /* Bordes más redondeados que combinan con tus tarjetas */
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); /* Sutil sombra para darle relieve */
+    }
+}
