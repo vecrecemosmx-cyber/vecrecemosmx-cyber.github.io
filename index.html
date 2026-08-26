@@ -4,160 +4,173 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Practice Room - American English App</title>
-    <!-- Importamos la tipografía moderna desde Google Fonts -->
+    <!-- Fuente Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://googleapis.com" rel="stylesheet">
-    
-    <!-- Enlace al archivo CSS externo -->
+    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Vinculación del archivo CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- BARRA SUPERIOR ACTUALIZADA CON BOTÓN DE HAMBURGUESA -->
+    <!-- CABECERA DE LA PÁGINA (MENÚ DESPLEGABLE REMOVIDO) -->
     <header class="app-header">
         <div class="header-left">
-            <!-- Botón de hamburguesa exclusivo para celulares -->
-            <button id="menu-toggle" class="menu-toggle-btn" aria-label="Abrir menú">
+            <button class="menu-toggle-btn" id="menu-toggle" aria-label="Abrir menú">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
             </button>
             <div class="logo">SPEAKEASY</div>
         </div>
+
         <div class="progress-container">
             <div class="progress-bar-bg">
-                <div id="progress-bar" class="progress-bar-fill"></div>
+                <div class="progress-bar-fill" id="progress-bar"></div>
             </div>
-            <span id="progress-text" class="progress-text">Pregunta 1 de 5</span>
+            <span class="progress-text" id="progress-text">Pregunta 1 de 5</span>
         </div>
+
         <div class="avatar">JD</div>
     </header>
 
-    <!-- INTERFAZ DE DOS COLUMNAS (MENÚ + PRÁCTICA) -->
+
+    <!-- INTERFAZ PRINCIPAL -->
     <div class="app-layout">
         
         <!-- MENÚ LATERAL IZQUIERDO -->
-        <aside id="sidebar" class="sidebar">
-            <h2 class="sidebar-title">Ejercicios de Práctica</h2>
+        <aside class="sidebar" id="sidebar">
+            <h3 class="sidebar-title">Ejercicios de Práctica</h3>
             <ul class="sidebar-menu">
-                <li class="menu-item active">
+                <li class="menu-item active" data-block="1">
                     <span class="menu-number">1</span> Vocales cortas
                 </li>
-                <li class="menu-item">
+                <li class="menu-item" data-block="2">
                     <span class="menu-number">2</span> Vocales largas
                 </li>
-                <li class="menu-item">
+                <li class="menu-item" data-block="3">
                     <span class="menu-number">3</span> Comparando cortas VS largas
                 </li>
-                <li class="menu-item">
+                <li class="menu-item" data-block="4">
                     <span class="menu-number">4</span> Diptongos
                 </li>
-                <li class="menu-item">
+                <li class="menu-item" data-block="5">
                     <span class="menu-number">5</span> Consonantes sonoras
                 </li>
-                <li class="menu-item">
+                <li class="menu-item" data-block="6">
                     <span class="menu-number">6</span> Consonantes no sonoras
                 </li>
-                <li class="menu-item">
+                <li class="menu-item" data-block="7">
                     <span class="menu-number">7</span> Otras consonantes
                 </li>
             </ul>
         </aside>
 
-        <!-- CONTENIDO PRINCIPAL DE PRÁCTICA -->
+        <!-- ÁREA CENTRAL DE TRABAJO (REORDENADA) -->
         <main class="main-container">
-
-            <!-- Menú desplegable para cambiar de fonema/lección (REUBICADO ARRIBA) -->
-            <select id="fonema-select" class="fonema-dropdown font-dropdown-top">
-                <option value="" disabled selected hidden>Elige un fonema para practicar</option>
-                <option value="ə">Selección: Fonema /ə/</option>
-                <option value="ɪ">Selección: Fonema /ɪ/</option>
-                <option value="ɛ">Selección: Fonema /ɛ/</option>
-                <option value="æ">Selección: Fonema /æ/</option>
-                <option value="ʌ">Selección: Fonema /ʌ/</option>
+            
+            <!-- NUEVA POSICIÓN: Selector de fonemas arriba de la tarjeta de botones (ID original respetada) -->
+            <select class="font-dropdown-top" id="fonema-select">
+                <option value="" selected disabled hidden>Elige un fonema</option>
+                <option value="ə">Fonema /ə/</option>
+                <option value="ɪ">Fonema /ɪ/</option>
+                <option value="ɛ">Fonema /ɛ/</option>
+                <option value="æ">Fonema /æ/</option>
+                <option value="ʌ">Fonema /ʌ/</option>
             </select>
 
-            <!-- TARJETA OBJETIVO SÓLO TEXTO -->
-            <div class="instruction-card">
-                <span class="instruction-text">Escucha con atención el audio y escribe la palabra o frase correcta abajo.</span>
-            </div>
-
-            <!-- AREA DE FOCO CENTRAL (AUDIO Y ONDAS) -->
+            <!-- 1. POSICIÓN SUPERIOR: Tarjeta Central de Reproducción Multimedia -->
             <div class="practice-card">
-                <div class="audio-buttons-group">
-                    <button id="play-word-btn" class="audio-btn">
-                        <svg class="ui-icon" viewBox="0 0 24 24" xmlns="http://w3.org">
-                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                        </svg>
-                        <span>Escuchar Palabra</span>
-                    </button>
-
-                    <button id="play-vocal-btn" class="audio-btn vocal-btn">
-                        <svg class="ui-icon" viewBox="0 0 24 24" xmlns="http://w3.org">
-                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                        </svg>
-                        <span>Vocal Que Se Practica</span>
-                    </button>
-                </div>
-
-                <!-- CONTENEDOR INTEGRADO: Deslizador sobrepuesto encima de las ondas -->
-                <div class="interactive-wave-box">
-                    
-                    <!-- 1. El control deslizante transparente va arriba flotando -->
-                    <input type="range" id="speed-slider" class="speed-slider over-wave-slider" min="0.5" max="1.5" step="0.05" value="1.25" aria-label="Velocidad de reproducción">
-                    
-                    <!-- 2. Las ondas se quedan de fondo pero visibles -->
-                    <div class="wave-container">
-                        <div class="wave-bar" style="height: 15px;"></div>
-                        <div class="wave-bar" style="height: 25px;"></div>
-                        <div class="wave-bar" style="height: 35px;"></div>
-                        <div class="wave-bar" style="height: 20px;"></div>
-                        <div class="wave-bar" style="height: 30px;"></div>
-                        <div class="wave-bar" style="height: 10px;"></div>
-                        <div class="wave-bar" style="height: 28px;"></div>
+                
+                <!-- Fila Superior Dividida: Botones Palabra y Vocal -->
+                <div class="audio-buttons-group" style="display: flex; flex-direction: row; width: 100%; align-items: center; justify-content: space-between; gap: 1.5rem; margin-bottom: 0.5rem;">
+                    <!-- Lado Izquierdo: Botón de Palabra (Azul) -->
+                    <div style="flex: 1; display: flex; justify-content: center;">
+                        <button class="audio-btn" id="play-word-btn">
+                            <svg class="ui-icon" viewBox="0 0 24 24">
+                                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                            </svg>
+                            Palabra
+                        </button>
                     </div>
 
-                    <!-- 3. Indicador flotante divertido de velocidad actual -->
-                    <span id="speed-bubble" class="speed-bubble-indicator">0.90x</span>
+                    <!-- Línea divisoria vertical central -->
+                    <div class="response-divider-line"></div>
+                    
+                    <!-- Lado Derecho: Botón de Vocal (Verde) -->
+                    <div style="flex: 1; display: flex; justify-content: center;">
+                        <button class="audio-btn vocal-btn" id="play-vocal-btn">
+                            <svg class="ui-icon" viewBox="0 0 24 24">
+                                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                            </svg>
+                            Vocal
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Fila Inferior Centrada: Controlador de velocidad y Onda de sonido animada -->
+                <div class="interactive-wave-box">
+                    <div class="wave-container">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                    <input type="range" id="speed-slider" class="over-wave-slider" min="0.5" max="1.5" step="0.05" value="1.25">
+                    <span class="speed-bubble-indicator" id="speed-bubble">1.00x</span>
                 </div>
 
             </div>
 
-            <!-- TARJETA DE RESPUESTA ESCRITA DIVIDIDA -->
+            <!-- 2. POSICIÓN INTERMEDIA: Tarjeta de Enunciado de la Pregunta -->
+            <div class="instruction-card">
+                <h2 class="instruction-text">
+                    Escucha con atención el audio y escribe la palabra o frase correcta abajo.
+                </h2>
+            </div>
+
+            <!-- 3. POSICIÓN INFERIOR: Entrada de Respuesta Dividida Simétricamente -->
             <div class="response-card split-response-card">
                 <div class="response-left-pane">
-                    <label for="student-answer" class="response-title">TU RESPUESTA</label>
-                    <input type="text" id="student-answer" class="response-input" placeholder="Escribe el número aquí..." maxlength="3" autocomplete="off" inputmode="numeric" pattern="[0-9]*">
-                    <div id="error-message" class="error-text"></div>
+                    <span class="response-title">TU RESPUESTA</span>
+                    <!-- Busca esta línea en tu HTML y déjala exactamente así: -->
+                    <input type="text" class="response-input" id="student-answer" placeholder="Escribe tu respuesta aquí..." autocomplete="off" inputmode="numeric" pattern="[0-9]*">
+                    <div class="error-text" id="error-message"></div>
                 </div>
+                
                 <div class="response-divider-line"></div>
+                
                 <div class="response-right-pane">
-                    <button id="check-answer-btn" class="check-green-btn">COMPROBAR</button>
+                    <button class="check-green-btn" id="check-answer-btn">COMPROBAR</button>
                 </div>
             </div>
 
-            <!-- TARJETA DE RETROALIMENTACIÓN -->
-            <div id="feedback-card" class="feedback-card hidden">
-                <p class="feedback-title">RESULTADO</p>
-                <p id="feedback-phrase" class="feedback-phrase"></p>
+            <!-- BLOQUE DE RETROALIMENTACIÓN (FEEDBACK) -->
+            <div class="feedback-card hidden" id="feedback-card">
+                <h4 class="feedback-title">RESULTADO</h4>
+                <div class="feedback-phrase" id="feedback-phrase"></div>
                 <div class="tip-box">
                     <strong>💡 Tip de acento Americano:</strong> <span id="tip-text"></span>
                 </div>
             </div>
 
-            <!-- ACCIONES INTERNAS ACTUALIZADAS -->
+            <!-- NAVEGACIÓN Y ACCIONES FINALES -->
             <div class="card-actions">
-                <button class="report-btn">🛠️ Reportar un problema</button>
+                <button class="report-btn">🛠 Reportar un problema</button>
                 <div class="navigation-buttons">
-                    <button id="prev-btn" class="back-question-btn hidden">← Pregunta anterior</button>
-                    <button id="action-btn" class="next-btn btn-disabled" disabled>SIGUIENTE PREGUNTA ➔</button>
+                    <button class="back-question-btn" id="prev-btn">← Pregunta anterior</button>
+                    <button class="next-btn" id="action-btn">SIGUIENTE PREGUNTA ➔</button>
                 </div>
             </div>
+
         </main>
     </div>
 
-    <!-- CONEXIÓN DEL ARCHIVO JAVASCRIPT -->
+    <!-- Vinculación del archivo JS -->
     <script src="script.js"></script>
 </body>
 </html>
