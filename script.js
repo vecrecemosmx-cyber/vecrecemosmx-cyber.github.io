@@ -40,19 +40,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Inicialización oficial de Google Sign-In dentro del contenedor HTML
+    // === REEMPLAZAR ESTE BLOQUE EN LA PARTE 1 DE TU SCRIPT.JS ===
+
+    // Inicialización oficial de Google Sign-In optimizada para producción en GitHub Pages
     if (window.google && google.accounts) {
         google.accounts.id.initialize({
             client_id: GOOGLE_CLIENT_ID,
-            callback: window.handleCredentialResponse
+            callback: window.handleCredentialResponse,
+            context: "signin",
+            ux_mode: "popup"  /* FORZA EL MODO VENTANA EMERGENTE: Crucial para mantener la sesión en GitHub Pages */
         });
         
         google.accounts.id.renderButton(
             document.getElementById("google-btn-container"),
-            { theme: "outline", size: "large", width: "100%" }
+            { 
+                theme: "outline", 
+                size: "large", 
+                width: "100%", 
+                text: "signin_with",
+                shape: "rectangular"
+            }
         );
         
-        google.accounts.id.prompt(); // Despliega la burbuja nativa Smart Lock si está disponible
+        // Deshabilitamos la burbuja "prompt" nativa automática temporalmente, 
+        // ya que en GitHub Pages a veces genera bucles si el usuario tiene múltiples cuentas.
+        // google.accounts.id.prompt(); 
     }
 
     // --- 2. MAPEO DE FONEMAS A LOS ENTRIES DEL JSON ---
