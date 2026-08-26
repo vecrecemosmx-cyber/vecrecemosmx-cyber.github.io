@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- 3. VARIABLES DE CONTROL GLOBALES DEL EJERCICIO ---
     let datasetByFonema = { "ə": [], "ɪ": [], "ɛ": [], "æ": [], "ʌ": [] };
-    let currentFonema = "ə";       
+    let currentFonema = "1";       
     let currentWordIndex = 0;       
     let currentQuestionIndex = 0;   
     let hasAnsweredCorrectly = false; 
