@@ -71,8 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const reverseFonemaMapping = { "1": "ə", "2": "ɪ", "3": "ɛ", "4": "æ", "5": "ʌ" };
     
     // Rutas base en GitHub para audios y base de datos
-    const baseAudioUrl = "https://raw.githubusercontent.com/vecrecemosmx-cyber/vecrecemosmx-cyber.github.io/main/databases/audio/";
-    const jsonUrl = "https://raw.githubusercontent.com/vecrecemosmx-cyber/vecrecemosmx-cyber.github.io/main/databases/tables/words_database.json";
+    const baseAudioUrl = "https://raw.githubusercontent.com/vecrecemosmx-cyber/vecrecemosmx-cyber.github.io";
+    const jsonUrl = "https://raw.githubusercontent.com/vecrecemosmx-cyber/vecrecemosmx-cyber.github.io/words_database.json";
     
     // --- 3. VARIABLES DE CONTROL GLOBALES DEL EJERCICIO ---
     let datasetByFonema = { "ə": [], "ɪ": [], "ɛ": [], "æ": [], "ʌ": [] };
