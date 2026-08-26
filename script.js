@@ -1,10 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. CONFIGURACIÓN E INICIO DE SESIÓN INTEGRADO CON GOOGLE ---
-    // Clave de Cliente de Google de Pruebas (Usa la de tu consola de desarrollador)
+    // --- 1. CONFIGURACIÓN E INICIO DE SESIÓN INTEGRADO CON GOOGLE (BLINDADO) ---
     const GOOGLE_CLIENT_ID = "1038098835533-ljnlngi6p1smnlmk3ocla866af4brv6e.apps.googleusercontent.com"; 
 
-    // === REEMPLAZAR ESTA FUNCIÓN EN LA PARTE 1 DE TU SCRIPT.JS ===
+    // Función central que le da el acceso al estudiante e inyecta su foto de perfil
+    window.concederAccesoUsuario = function(userPicture) {
+        // Ocultamos la pantalla de bienvenida y revelamos tu app estable
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('main-app-content').classList.remove('hidden');
+
+        // Inyectamos la foto de perfil real del estudiante en tu componente .avatar
+        const avatarElement = document.getElementById('user-avatar');
+        if (avatarElement && userPicture) {
+            avatarElement.style.backgroundImage = `url('${userPicture}')`;
+            avatarElement.textContent = ""; // Quitamos las iniciales "JD" estáticas
+        }
+
+        currentQuestionIndex = 0; 
+        currentWordIndex = 0;
+
+        // Arrancamos la carga de la base de datos de palabras
+        loadDatabaseFromJSON();
+    };
+
+    // Función que procesa el Token JWT devuelto por Google
     window.handleCredentialResponse = function(response) {
         try {
             // Desencriptamos el Token de Google de forma segura
@@ -17,38 +36,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const userData = JSON.parse(jsonPayload);
             console.log("¡Usuario autenticado con éxito!", userData);
 
-            // 1. Ocultamos la pantalla de bienvenida y revelamos tu app estable
-            document.getElementById('login-screen').classList.add('hidden');
-            document.getElementById('main-app-content').classList.remove('hidden');
+            // GUARDAR ESTADO: Evita que el refresco del navegador te cierre la sesión
+            sessionStorage.setItem('speakeasy_logged_in', 'true');
+            if (userData.picture) sessionStorage.setItem('speakeasy_user_pic', userData.picture);
 
-            // 2. Inyectamos la foto de perfil real del estudiante en tu componente .avatar
-            const avatarElement = document.getElementById('user-avatar');
-            if (avatarElement && userData.picture) {
-                avatarElement.style.backgroundImage = `url('${userData.picture}')`;
-                avatarElement.textContent = ""; // Quitamos las iniciales "JD" estáticas
-            }
-
-            // 3. REPARACIÓN CRÍTICA: Aseguramos el reinicio de las preguntas antes de llamar al JSON
-            currentQuestionIndex = 0; 
-            currentWordIndex = 0;
-
-            // 4. Arrancamos la carga de la base de datos de palabras
-            loadDatabaseFromJSON();
+            // Concedemos el acceso inmediato
+            window.concederAccesoUsuario(userData.picture);
 
         } catch (e) {
             console.error("Error al procesar la credencial de Google:", e);
         }
     };
 
-    // === REEMPLAZAR ESTE BLOQUE EN LA PARTE 1 DE TU SCRIPT.JS ===
-
-    // Inicialización oficial de Google Sign-In optimizada para producción en GitHub Pages
+    // Inicialización oficial de Google Sign-In con ux_mode en Popup para evitar rebotes
     if (window.google && google.accounts) {
         google.accounts.id.initialize({
             client_id: GOOGLE_CLIENT_ID,
             callback: window.handleCredentialResponse,
             context: "signin",
-            ux_mode: "popup"  /* FORZA EL MODO VENTANA EMERGENTE: Crucial para mantener la sesión en GitHub Pages */
+            ux_mode: "popup"  /* MODO POPUP: Evita recargas y mantiene la sesión abierta */
         });
         
         google.accounts.id.renderButton(
@@ -61,18 +67,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 shape: "rectangular"
             }
         );
-        
-        // Deshabilitamos la burbuja "prompt" nativa automática temporalmente, 
-        // ya que en GitHub Pages a veces genera bucles si el usuario tiene múltiples cuentas.
-        // google.accounts.id.prompt(); 
+    }
+
+    // VERIFICACIÓN PERSISTENTE AUTOMÁTICA: Si el usuario ya entró, no le muestres el login al refrescar
+    if (sessionStorage.getItem('speakeasy_logged_in') === 'true') {
+        setTimeout(() => {
+            const savedPic = sessionStorage.getItem('speakeasy_user_pic');
+            window.concederAccesoUsuario(savedPic);
+        }, 150);
     }
 
     // --- 2. MAPEO DE FONEMAS A LOS ENTRIES DEL JSON ---
     const reverseFonemaMapping = { "1": "ə", "2": "ɪ", "3": "ɛ", "4": "æ", "5": "ʌ" };
-    
     // Rutas base en GitHub para audios y base de datos
-    const baseAudioUrl = "https://raw.githubusercontent.com/vecrecemosmx-cyber/vecrecemosmx-cyber.github.io";
-    const jsonUrl = "https://raw.githubusercontent.com/vecrecemosmx-cyber/vecrecemosmx-cyber.github.io/words_database.json";
+    const baseAudioUrl = "https://raw.githubusercontent.com/vecrecemosmx-cyber/vecrecemosmx-cyber.github.io/main/databases/audio/";
+    const jsonUrl = "https://raw.githubusercontent.com/vecrecemosmx-cyber/vecrecemosmx-cyber.github.io/main/databases/tables/words_database.json";
     
     // --- 3. VARIABLES DE CONTROL GLOBALES DEL EJERCICIO ---
     let datasetByFonema = { "ə": [], "ɪ": [], "ɛ": [], "æ": [], "ʌ": [] };
@@ -110,15 +119,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const speedSlider = document.getElementById('speed-slider');
     const speedBubble = document.getElementById('speed-bubble');
 
-    // === REEMPLAZAR LA FUNCIÓN 5 EN TU SCRIPT.JS ===
+    // --- 5. FUNCIÓN DE CARGA DINÁMICA CON JSON ---
     async function loadDatabaseFromJSON() {
         try {
             const response = await fetch(jsonUrl);
             if (!response.ok) throw new Error("No se pudo descargar el archivo JSON.");
             
             const wordsArray = await response.json();
-            
-            // Limpiamos y aseguramos la estructura del diccionario
             datasetByFonema = { "ə": [], "ɪ": [], "ɛ": [], "æ": [], "ʌ": [] };
 
             wordsArray.forEach(item => {
@@ -137,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log("Base de datos cargada exitosamente:", datasetByFonema);
             
-            // REPARACIÓN CRÍTICA: Forzamos el arranque del ejercicio garantizando que tome el fonema actual
             if (datasetByFonema[currentFonema]) {
                 initExercise(); 
             } else {
@@ -152,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Inicializamos el reto en pantalla apuntando al elemento exacto de la UI
     function initExercise() {
-        // Buscamos dinámicamente la tarjeta por su clase nativa para inyectar la pregunta
         const instructionCardText = document.querySelector('.instruction-card .instruction-text');
         const currentDataArray = datasetByFonema[currentFonema];
         
@@ -163,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Inyectamos el texto de la pregunta actual (ej. Pregunta 1, 2, 3...)
         if (instructionCardText) {
             instructionCardText.textContent = questionsTexts[currentQuestionIndex];
         } else if (instructionText) {
@@ -181,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateProgressBar();
         togglePrevButtonVisibility();
 
-        // Enlace del deslizador interactivo de velocidad
         if (speedSlider && speedBubble) {
             speedBubble.textContent = `${parseFloat(speedSlider.value).toFixed(2)}x`;
             speedSlider.oninput = (event) => {
@@ -290,7 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         setTimeout(() => { feedbackCard.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
     }
-
     // --- 6. CONTROLADORES DE AUDIO Y REPRODUCCIÓN ---
     function handlePlayWordAudio(event) {
         event.preventDefault();
