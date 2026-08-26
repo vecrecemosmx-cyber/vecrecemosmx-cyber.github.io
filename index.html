@@ -8,68 +8,40 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Script Oficial de Autenticación de Google -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <!-- Vinculación del archivo CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- CABECERA DE LA PÁGINA (MENÚ DESPLEGABLE REMOVIDO) -->
-    <header class="app-header">
-        <div class="header-left">
-            <button class="menu-toggle-btn" id="menu-toggle" aria-label="Abrir menú">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-            <div class="logo">SPEAKEASY</div>
-        </div>
-
-        <div class="progress-container">
-            <div class="progress-bar-bg">
-                <div class="progress-bar-fill" id="progress-bar"></div>
-            </div>
-            <span class="progress-text" id="progress-text">Pregunta 1 de 5</span>
-        </div>
-
-        <div class="avatar">JD</div>
-    </header>
-
-
-    <!-- INTERFAZ PRINCIPAL -->
-    <div class="app-layout">
-        
-        <!-- MENÚ LATERAL IZQUIERDO -->
-        <aside class="sidebar" id="sidebar">
-            <h3 class="sidebar-title">Ejercicios de Práctica</h3>
-            <ul class="sidebar-menu">
-                <li class="menu-item active" data-block="1">
-                    <span class="menu-number">1</span> Vocales cortas
-                </li>
-                <li class="menu-item" data-block="2">
-                    <span class="menu-number">2</span> Vocales largas
-                </li>
-                <li class="menu-item" data-block="3">
-                    <span class="menu-number">3</span> Comparando cortas VS largas
-                </li>
-                <li class="menu-item" data-block="4">
-                    <span class="menu-number">4</span> Diptongos
-                </li>
-                <li class="menu-item" data-block="5">
-                    <span class="menu-number">5</span> Consonantes sonoras
-                </li>
-                <li class="menu-item" data-block="6">
-                    <span class="menu-number">6</span> Consonantes no sonoras
-                </li>
-                <li class="menu-item" data-block="7">
-                    <span class="menu-number">7</span> Otras consonantes
-                </li>
-            </ul>
-        </aside>
-
-        <!-- ÁREA CENTRAL DE TRABAJO (REORDENADA) -->
-        <main class="main-container">
+    <!-- PANTALLA DE INICIO DE SESIÓN DE GOOGLE (HEREDA TU DISEÑO E IMPEDIRÁ EL ACCESO HASTA LOGUEARSE) -->
+    <div id="login-screen" style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100vw; height: 100vh; background-color: #F4F7FA; padding: 20px; position: fixed; top: 0; left: 0; z-index: 9999;">
+        <div class="response-card" style="width: 100%; max-width: 400px; padding: 3rem 2rem; text-align: center; display: flex; flex-direction: column; gap: 1.5rem; align-items: center;">
+            <div class="logo" style="font-size: 2rem; margin-bottom: 0.5rem;">SPEAKEASY</div>
+            <h2 class="instruction-text" style="font-size: 1.3rem;">Bienvenido</h2>
+            <span class="response-title" style="margin-bottom: 1rem;">Inicia sesión para acceder a tu plataforma de práctica fonética.</span>
             
-            <!-- NUEVA POSICIÓN: Selector de fonemas arriba de la tarjeta de botones (ID original respetada) -->
+            <!-- Contenedor donde Google dibujará su botón oficial -->
+            <div id="google-btn-container"></div>
+        </div>
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL DE LA PLATAFORMA (OCULTO INICIALMENTE CON TU CLASE .hidden) -->
+    <div id="main-app-content" class="hidden">
+        
+        <!-- CABECERA DE LA APLICACIÓN -->
+        <header class="app-header">
+            <div class="header-left">
+                <button class="menu-toggle-btn" id="menu-toggle" aria-label="Abrir menú">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                <div class="logo">SPEAKEASY</div>
+            </div>
+
+            <!-- Selector centrado de fonemas -->
             <select class="font-dropdown-top" id="fonema-select">
                 <option value="" selected disabled hidden>Elige un fonema</option>
                 <option value="ə">Fonema /ə/</option>
@@ -79,98 +51,143 @@
                 <option value="ʌ">Fonema /ʌ/</option>
             </select>
 
-            <!-- 1. POSICIÓN SUPERIOR: Tarjeta Central de Reproducción Multimedia -->
-            <div class="practice-card">
-                
-                <!-- Fila Superior Dividida: Botones Palabra y Vocal -->
-                <div class="audio-buttons-group" style="display: flex; flex-direction: row; width: 100%; align-items: center; justify-content: space-between; gap: 1.5rem; margin-bottom: 0.5rem;">
-                    <!-- Lado Izquierdo: Botón de Palabra (Azul) -->
-                    <div style="flex: 1; display: flex; justify-content: center;">
-                        <button class="audio-btn" id="play-word-btn">
-                            <svg class="ui-icon" viewBox="0 0 24 24">
-                                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                            </svg>
-                            Palabra
-                        </button>
+            <div class="progress-container">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-bar"></div>
+                </div>
+                <span class="progress-text" id="progress-text">Pregunta 1 de 5</span>
+            </div>
+
+            <!-- Avatar adaptado para recibir de forma dinámica la foto del alumno de Google -->
+            <div class="avatar" id="user-avatar" style="overflow: hidden; background-size: cover; background-position: center;">JD</div>
+        </header>
+
+        <!-- INTERFAZ PRINCIPAL -->
+        <div class="app-layout">
+            
+            <!-- MENÚ LATERAL IZQUIERDO -->
+            <aside class="sidebar" id="sidebar">
+                <h3 class="sidebar-title">Ejercicios de Práctica</h3>
+                <ul class="sidebar-menu">
+                    <li class="menu-item active" data-block="1">
+                        <span class="menu-number">1</span> Vocales cortas
+                    </li>
+                    <li class="menu-item" data-block="2">
+                        <span class="menu-number">2</span> Vocales largas
+                    </li>
+                    <li class="menu-item" data-block="3">
+                        <span class="menu-number">3</span> Comparando cortas VS largas
+                    </li>
+                    <li class="menu-item" data-block="4">
+                        <span class="menu-number">4</span> Diptongos
+                    </li>
+                    <li class="menu-item" data-block="5">
+                        <span class="menu-number">5</span> Consonantes sonoras
+                    </li>
+                    <li class="menu-item" data-block="6">
+                        <span class="menu-number">6</span> Consonantes no sonoras
+                    </li>
+                    <li class="menu-item" data-block="7">
+                        <span class="menu-number">7</span> Otras consonantes
+                    </li>
+                </ul>
+            </aside>
+
+            <!-- ÁREA CENTRAL DE TRABAJO -->
+            <main class="main-container">
+
+                <!-- 1. POSICIÓN SUPERIOR: Tarjeta Central de Reproducción Multimedia Completa -->
+                <div class="practice-card">
+                    
+                    <!-- Fila Superior Dividida: Botones Palabra y Vocal -->
+                    <div class="audio-buttons-group" style="display: flex; flex-direction: row; width: 100%; align-items: center; justify-content: space-between; gap: 1.5rem; margin-bottom: 0.5rem;">
+                        <!-- Lado Izquierdo: Botón de Palabra (Azul) -->
+                        <div style="flex: 1; display: flex; justify-content: center;">
+                            <button class="audio-btn" id="play-word-btn">
+                                <svg class="ui-icon" viewBox="0 0 24 24">
+                                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                                </svg>
+                                Palabra
+                            </button>
+                        </div>
+
+                        <!-- Línea divisoria vertical central -->
+                        <div class="response-divider-line"></div>
+                        
+                        <!-- Lado Derecho: Botón de Vocal (Verde) -->
+                        <div style="flex: 1; display: flex; justify-content: center;">
+                            <button class="audio-btn vocal-btn" id="play-vocal-btn">
+                                <svg class="ui-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"/>
+                                </svg>
+                                Vocal
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Línea divisoria vertical central -->
+                    <!-- Fila Inferior Centrada: Controlador de velocidad y Onda de sonido animada -->
+                    <div class="interactive-wave-box">
+                        <div class="wave-container">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                        <input type="range" id="speed-slider" class="over-wave-slider" min="0.5" max="1.5" step="0.1" value="1">
+                        <span class="speed-bubble-indicator" id="speed-bubble">1.00x</span>
+                    </div>
+
+                </div>
+
+                <!-- 2. POSICIÓN INTERMEDIA: Tarjeta de Enunciado de la Pregunta -->
+                <div class="instruction-card">
+                    <h2 class="instruction-text">
+                        Escucha con atención el audio y escribe la palabra o frase correcta abajo.
+                    </h2>
+                </div>
+
+                <!-- 3. POSICIÓN INFERIOR: Entrada de Respuesta Dividida Simétricamente -->
+                <div class="response-card split-response-card">
+                    <div class="response-left-pane">
+                        <span class="response-title">TU RESPUESTA</span>
+                        <input type="text" class="response-input" id="student-answer" placeholder="Escribe tu respuesta aquí..." autocomplete="off" inputmode="numeric" pattern="[0-9]*">
+                        <div class="error-text" id="error-message"></div>
+                    </div>
+                    
                     <div class="response-divider-line"></div>
                     
-                    <!-- Lado Derecho: Botón de Vocal (Verde) -->
-                    <div style="flex: 1; display: flex; justify-content: center;">
-                        <button class="audio-btn vocal-btn" id="play-vocal-btn">
-                            <svg class="ui-icon" viewBox="0 0 24 24">
-                                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                            </svg>
-                            Vocal
-                        </button>
+                    <div class="response-right-pane">
+                        <button class="check-green-btn" id="check-answer-btn">COMPROBAR</button>
                     </div>
                 </div>
 
-                <!-- Fila Inferior Centrada: Controlador de velocidad y Onda de sonido animada -->
-                <div class="interactive-wave-box">
-                    <div class="wave-container">
-                        <div class="wave-bar"></div>
-                        <div class="wave-bar"></div>
-                        <div class="wave-bar"></div>
-                        <div class="wave-bar"></div>
-                        <div class="wave-bar"></div>
-                        <div class="wave-bar"></div>
-                        <div class="wave-bar"></div>
-                        <div class="wave-bar"></div>
+                <!-- BLOQUE DE RETROALIMENTACIÓN (FEEDBACK) -->
+                <div class="feedback-card hidden" id="feedback-card">
+                    <h4 class="feedback-title">RESULTADO</h4>
+                    <div class="feedback-phrase" id="feedback-phrase"></div>
+                    <div class="tip-box">
+                        <strong>💡 Tip de acento Americano:</strong> <span id="tip-text"></span>
                     </div>
-                    <input type="range" id="speed-slider" class="over-wave-slider" min="0.5" max="1.5" step="0.05" value="1.25">
-                    <span class="speed-bubble-indicator" id="speed-bubble">1.00x</span>
                 </div>
 
-            </div>
-
-            <!-- 2. POSICIÓN INTERMEDIA: Tarjeta de Enunciado de la Pregunta -->
-            <div class="instruction-card">
-                <h2 class="instruction-text">
-                    Escucha con atención el audio y escribe la palabra o frase correcta abajo.
-                </h2>
-            </div>
-
-            <!-- 3. POSICIÓN INFERIOR: Entrada de Respuesta Dividida Simétricamente -->
-            <div class="response-card split-response-card">
-                <div class="response-left-pane">
-                    <span class="response-title">TU RESPUESTA</span>
-                    <!-- Busca esta línea en tu HTML y déjala exactamente así: -->
-                    <input type="text" class="response-input" id="student-answer" placeholder="Escribe tu respuesta aquí..." autocomplete="off" inputmode="numeric" pattern="[0-9]*">
-                    <div class="error-text" id="error-message"></div>
+                <!-- NAVEGACIÓN Y ACCIONES FINALES -->
+                <div class="card-actions">
+                    <button class="report-btn">🛠 Reportar un problema</button>
+                    <div class="navigation-buttons">
+                        <button class="back-question-btn" id="prev-btn">← Pregunta anterior</button>
+                        <button class="next-btn" id="action-btn">SIGUIENTE PREGUNTA ➔</button>
+                    </div>
                 </div>
-                
-                <div class="response-divider-line"></div>
-                
-                <div class="response-right-pane">
-                    <button class="check-green-btn" id="check-answer-btn">COMPROBAR</button>
-                </div>
-            </div>
 
-            <!-- BLOQUE DE RETROALIMENTACIÓN (FEEDBACK) -->
-            <div class="feedback-card hidden" id="feedback-card">
-                <h4 class="feedback-title">RESULTADO</h4>
-                <div class="feedback-phrase" id="feedback-phrase"></div>
-                <div class="tip-box">
-                    <strong>💡 Tip de acento Americano:</strong> <span id="tip-text"></span>
-                </div>
-            </div>
-
-            <!-- NAVEGACIÓN Y ACCIONES FINALES -->
-            <div class="card-actions">
-                <button class="report-btn">🛠 Reportar un problema</button>
-                <div class="navigation-buttons">
-                    <button class="back-question-btn" id="prev-btn">← Pregunta anterior</button>
-                    <button class="next-btn" id="action-btn">SIGUIENTE PREGUNTA ➔</button>
-                </div>
-            </div>
-
-        </main>
+            </main>
+        </div>
     </div>
 
-    <!-- Vinculación del archivo JS -->
+    <!-- Vinculación del archivo JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>

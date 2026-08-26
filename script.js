@@ -1,20 +1,71 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. MAPEO DE FONEMAS A LOS ENTRIES DEL JSON ---
+    // --- 1. CONFIGURACIÓN E INICIO DE SESIÓN INTEGRADO CON GOOGLE ---
+    // Clave de Cliente de Google de Pruebas (Usa la de tu consola de desarrollador)
+    const GOOGLE_CLIENT_ID = "1038098835533-ljnlngi6p1smnlmk3ocla866af4brv6e.apps.googleusercontent.com"; 
+
+    // Función global que procesa el Token JWT devuelto por Google
+    window.handleCredentialResponse = function(response) {
+        try {
+            // Desencriptamos el Token de Google de forma segura
+            const base64Url = response.credential.split('.');
+            const base64 = base64Url[1].replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            const userData = JSON.parse(jsonPayload);
+            console.log("¡Usuario autenticado con éxito!", userData);
+
+            // Ocultamos la pantalla de bienvenida y revelamos tu app estable
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('main-app-content').classList.remove('hidden');
+
+            // Inyectamos la foto de perfil real del estudiante en tu componente .avatar
+            const avatarElement = document.getElementById('user-avatar');
+            if (avatarElement && userData.picture) {
+                avatarElement.style.backgroundImage = `url('${userData.picture}')`;
+                avatarElement.textContent = ""; // Quitamos las iniciales "JD" estáticas
+            }
+
+            // Arrancamos la carga normal de la base de datos de palabras
+            loadDatabaseFromJSON();
+
+        } catch (e) {
+            console.error("Error al procesar la credencial de Google:", e);
+        }
+    };
+
+    // Inicialización oficial de Google Sign-In dentro del contenedor HTML
+    if (window.google && google.accounts) {
+        google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_ID,
+            callback: window.handleCredentialResponse
+        });
+        
+        google.accounts.id.renderButton(
+            document.getElementById("google-btn-container"),
+            { theme: "outline", size: "large", width: "100%" }
+        );
+        
+        google.accounts.id.prompt(); // Despliega la burbuja nativa Smart Lock si está disponible
+    }
+
+    // --- 2. MAPEO DE FONEMAS A LOS ENTRIES DEL JSON ---
     const reverseFonemaMapping = { "1": "ə", "2": "ɪ", "3": "ɛ", "4": "æ", "5": "ʌ" };
     
     // Rutas base en GitHub para audios y base de datos
     const baseAudioUrl = "https://raw.githubusercontent.com/vecrecemosmx-cyber/vecrecemosmx-cyber.github.io/main/databases/audio/";
     const jsonUrl = "https://raw.githubusercontent.com/vecrecemosmx-cyber/vecrecemosmx-cyber.github.io/main/databases/tables/words_database.json";
     
-    // --- 2. VARIABLES DE CONTROL GLOBALES DEL EJERCICIO ---
+    // --- 3. VARIABLES DE CONTROL GLOBALES DEL EJERCICIO ---
     let datasetByFonema = { "ə": [], "ɪ": [], "ɛ": [], "æ": [], "ʌ": [] };
     let currentFonema = "ə";       
     let currentWordIndex = 0;       
     let currentQuestionIndex = 0;   
     let hasAnsweredCorrectly = false; 
 
-    // Enunciado exacto de tus 5 preguntas secuenciales
+    // Lista secuencial de preguntas
     const questionsTexts = [
         "1. ¿Cuántos sonidos componen la palabra?",
         "2. ¿Cuántos fonemas consonantes tiene?",
@@ -23,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "5. ¿En qué sílaba está la vocal que estamos practicando?"
     ];
 
-    // --- 3. CAPTURA DE COMPONENTES DEL DOM (Sincronizado al HTML) ---
+    // --- 4. CAPTURA DE COMPONENTES DEL DOM (Sincronizado al HTML) ---
     const instructionText = document.querySelector('.instruction-text');
     const answerInput = document.getElementById('student-answer');
     const errorMessage = document.getElementById('error-message');
@@ -43,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const speedSlider = document.getElementById('speed-slider');
     const speedBubble = document.getElementById('speed-bubble');
 
-    // --- 4. FUNCIÓN DE CARGA DINÁMICA CON JSON ---
+    // --- 5. FUNCIÓN DE CARGA DINÁMICA CON JSON ---
     async function loadDatabaseFromJSON() {
         try {
             const response = await fetch(jsonUrl);
@@ -80,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-      // --- 5. LÓGICA DE CONTROL E INICIALIZACIÓN ---
+    // Inicializamos el reto en pantalla
     function initExercise() {
         const currentDataArray = datasetByFonema[currentFonema];
         if (!currentDataArray || currentDataArray.length === 0) {
@@ -212,14 +263,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 6. CONTROLADORES DE AUDIO Y REPRODUCCIÓN ---
-    // REPRODUCCIÓN AUDIO PALABRA CON ENFOQUE INMEDIATO Y TECLADO
     function handlePlayWordAudio(event) {
         event.preventDefault();
         
-        // 1. Hacemos el focus inmediatamente para activar el teclado numérico sin retrasos
+        // Enfoque inmediato al cuadro de texto para abrir el teclado numérico en móviles
         answerInput.focus();
-        
-        // 2. Hacemos el desplazamiento suave de la pantalla de forma paralela
         responseCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
         const currentData = datasetByFonema[currentFonema][currentWordIndex];
@@ -234,7 +282,6 @@ document.addEventListener('DOMContentLoaded', () => {
             window.speechSynthesis.speak(utterance);
         }
     }
-
 
     function handlePlayVocalAudio(event) {
         event.preventDefault();
@@ -334,7 +381,4 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', closeSidebarMenu);
         document.addEventListener('touchstart', closeSidebarMenu);
     }
-
-    // ARRANQUE AUTOMÁTICO DE LA APLICACIÓN
-    loadDatabaseFromJSON();
 });
