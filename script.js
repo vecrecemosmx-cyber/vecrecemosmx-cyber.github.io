@@ -98,13 +98,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const speedSlider = document.getElementById('speed-slider');
     const speedBubble = document.getElementById('speed-bubble');
 
-    // --- 5. FUNCIÓN DE CARGA DINÁMICA CON JSON ---
+    // === REEMPLAZAR LA FUNCIÓN 5 EN TU SCRIPT.JS ===
     async function loadDatabaseFromJSON() {
         try {
             const response = await fetch(jsonUrl);
             if (!response.ok) throw new Error("No se pudo descargar el archivo JSON.");
             
             const wordsArray = await response.json();
+            
+            // Limpiamos y aseguramos la estructura del diccionario
             datasetByFonema = { "ə": [], "ɪ": [], "ɛ": [], "æ": [], "ʌ": [] };
 
             wordsArray.forEach(item => {
@@ -121,29 +123,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            console.log("Base de datos cargada:", datasetByFonema);
+            console.log("Base de datos cargada exitosamente:", datasetByFonema);
             
-            if (datasetByFonema[currentFonema].length > 0) {
+            // REPARACIÓN CRÍTICA: Forzamos el arranque del ejercicio garantizando que tome el fonema actual
+            if (datasetByFonema[currentFonema]) {
                 initExercise(); 
             } else {
-                showError("⚠️ El fonema seleccionado no contiene palabras.");
+                showError("⚠️ El fonema seleccionado no contiene palabras válidas.");
             }
 
         } catch (error) {
             console.error("Error al procesar el JSON:", error);
-            showError("⚠️ Error al conectar con el servidor.");
+            showError("⚠️ Error al conectar con el servidor de la base de datos.");
         }
     }
 
-    // Inicializamos el reto en pantalla
+    // Inicializamos el reto en pantalla apuntando al elemento exacto de la UI
     function initExercise() {
+        // Buscamos dinámicamente la tarjeta por su clase nativa para inyectar la pregunta
+        const instructionCardText = document.querySelector('.instruction-card .instruction-text');
         const currentDataArray = datasetByFonema[currentFonema];
+        
         if (!currentDataArray || currentDataArray.length === 0) {
-            instructionText.textContent = "No hay palabras disponibles para este fonema.";
+            if (instructionCardText) {
+                instructionCardText.textContent = "No hay palabras disponibles para este fonema.";
+            }
             return;
         }
 
-        instructionText.textContent = questionsTexts[currentQuestionIndex];
+        // Inyectamos el texto de la pregunta actual (ej. Pregunta 1, 2, 3...)
+        if (instructionCardText) {
+            instructionCardText.textContent = questionsTexts[currentQuestionIndex];
+        } else if (instructionText) {
+            instructionText.textContent = questionsTexts[currentQuestionIndex];
+        }
         
         hasAnsweredCorrectly = false;
         actionButton.disabled = true;
