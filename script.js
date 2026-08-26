@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Clave de Cliente de Google de Pruebas (Usa la de tu consola de desarrollador)
     const GOOGLE_CLIENT_ID = "1038098835533-ljnlngi6p1smnlmk3ocla866af4brv6e.apps.googleusercontent.com"; 
 
-    // Función global que procesa el Token JWT devuelto por Google
+    // === REEMPLAZAR ESTA FUNCIÓN EN LA PARTE 1 DE TU SCRIPT.JS ===
     window.handleCredentialResponse = function(response) {
         try {
             // Desencriptamos el Token de Google de forma segura
             const base64Url = response.credential.split('.');
-            const base64 = base64Url[1].replace(/-/g, '+').replace(/_/g, '/');
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
             const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
@@ -17,18 +17,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const userData = JSON.parse(jsonPayload);
             console.log("¡Usuario autenticado con éxito!", userData);
 
-            // Ocultamos la pantalla de bienvenida y revelamos tu app estable
+            // 1. Ocultamos la pantalla de bienvenida y revelamos tu app estable
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('main-app-content').classList.remove('hidden');
 
-            // Inyectamos la foto de perfil real del estudiante en tu componente .avatar
+            // 2. Inyectamos la foto de perfil real del estudiante en tu componente .avatar
             const avatarElement = document.getElementById('user-avatar');
             if (avatarElement && userData.picture) {
                 avatarElement.style.backgroundImage = `url('${userData.picture}')`;
                 avatarElement.textContent = ""; // Quitamos las iniciales "JD" estáticas
             }
 
-            // ARRANQUE AUTOMÁTICO DE LA APLICACIÓN
+            // 3. REPARACIÓN CRÍTICA: Aseguramos el reinicio de las preguntas antes de llamar al JSON
+            currentQuestionIndex = 0; 
+            currentWordIndex = 0;
+
+            // 4. Arrancamos la carga de la base de datos de palabras
             loadDatabaseFromJSON();
 
         } catch (e) {
