@@ -48,13 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Inicialización oficial de Google Sign-In con ux_mode en Popup para evitar rebotes
+    // === REEMPLAZAR ESTE BLOQUE EN LA PARTE 1 DE TU SCRIPT.JS ===
     if (window.google && google.accounts) {
         google.accounts.id.initialize({
             client_id: GOOGLE_CLIENT_ID,
             callback: window.handleCredentialResponse,
             context: "signin",
-            ux_mode: "popup"  /* MODO POPUP: Evita recargas y mantiene la sesión abierta */
+            ux_mode: "redirect"  /* CAMBIADO A REDIRECT: Elimina la ventana emergente y evita que se congele en blanco */
         });
         
         google.accounts.id.renderButton(
