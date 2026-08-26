@@ -28,8 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 avatarElement.textContent = ""; // Quitamos las iniciales "JD" estáticas
             }
 
-            // Arrancamos la carga normal de la base de datos de palabras
-            loadDatabaseFromJSON();
 
         } catch (e) {
             console.error("Error al procesar la credencial de Google:", e);
@@ -381,4 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', closeSidebarMenu);
         document.addEventListener('touchstart', closeSidebarMenu);
     }
+
+    // ARRANQUE AUTOMÁTICO DE LA APLICACIÓN
+    loadDatabaseFromJSON();
 });
